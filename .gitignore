@@ -1,0 +1,7 @@
+node_modules/
+.idea/
+persist/
+.env
+.tern-project
+*.swp
+*.log
