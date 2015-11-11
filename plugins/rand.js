@@ -1,3 +1,6 @@
-/**
- * Created by JasKang on 11/10/2015.
- */
+var rand = {};
+rand.askOption = function(desc){
+    return desc.desc;
+}
+
+//who you going to talk to

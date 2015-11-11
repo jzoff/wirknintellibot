@@ -1,3 +1,1 @@
-/**
- * Created by JasKang on 11/10/2015.
- */
+//send kik question for session and username

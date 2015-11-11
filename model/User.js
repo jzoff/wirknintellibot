@@ -1,3 +1,9 @@
-/**
- * Created by JasKang on 11/11/2015.
- */
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var User = new Schema({
+    username:   {type:  String},
+    current:    {type:  Number}
+});
+
+module.exports = mongoose.model('User',User);
