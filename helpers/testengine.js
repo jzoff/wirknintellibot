@@ -50,17 +50,15 @@ var getUserFromDb = function(username, cb) {
             var returnVals = {
                 user: user
             };
-            console.log(user.username);
             cb(returnVals);
             //return res.send(200, currentActivity);
         });
 }
 var updateUserDb = function(username, activity, cb) {
-    console.log('in update',username, activity);
+    //console.log('in update',username, activity);
     //A.findOneAndUpdate(conditions, update, options, callback) // executes
     var query = User.findOneAndUpdate({ username: username }, { current: activity }, {new: true});//, function (err, user) {
     query.exec(function (err, user) {
-        console.log('exec update');
         if (err) {
             console.log(err);//return res.send(400);
         }
@@ -70,7 +68,6 @@ var updateUserDb = function(username, activity, cb) {
         var returnVals = {
             user: user
         };
-        console.log(user.username);
         cb(returnVals);
         //mongoose.disconnect();
         //return res.send(200, currentActivity);
@@ -85,7 +82,14 @@ Engine.execute = function(username,datas,cb) {
     var arr = []
     if (datas !== null){
         console.log('currentId:         ' + datas.currentActivity.id);
+        console.log('plugin             ' + datas.currentActivity.plugin);
+        //console.log('desc             ' + datas.currentActivity.data.desc);
+        var plugin = require('../plugins/' + datas.currentActivity.plugin);
+        //console.log(plugin);
+        console.log('Question:          ' + plugin.returnFunc(username, datas.currentActivity.data.desc));
         console.log('Count:             ' + datas.nextActivities.length);
+
+        //plugin.returnFunc(username, datas.currentActivity.data.desc)();
 
         for (var i = 0; i < datas.nextActivities.length; i++) {
             if (eval(datas.nextActivities[i].condition)) {
@@ -102,10 +106,10 @@ Engine.execute = function(username,datas,cb) {
 
 //third test
 var doYourThing = function() {
-    var username = 'jon';
+    var username = 'jasiekang';
 
     getUserFromDb(username,function(returnUser){//get current activity for the user
-        console.log(returnUser.user.username,returnUser.user.current );
+        console.log('username:' +returnUser.user.username, 'currentId:' + returnUser.user.current );
         var username = returnUser.user.username;
         var activity = returnUser.user.current === null ? 0 : returnUser.user.current ;
 
@@ -113,7 +117,7 @@ var doYourThing = function() {
 
             Engine.execute(username,returnVals,function(arr){//get matching nextactivity based on condition
                 if (arr.length <= 0) {
-                    console.log('done for cynthia');
+                    console.log('done for:'+ username);
                     mongoose.disconnect();
                 }
                 else {
@@ -121,7 +125,6 @@ var doYourThing = function() {
                         console.log('nextId:            ' + v);
                     });
 
-                    console.log('update');
                     updateUserDb(username, arr[0], function (user) { //update user.current activity
                         console.log(username, arr[0], user.user.current, user.user.username);
                         mongoose.disconnect();

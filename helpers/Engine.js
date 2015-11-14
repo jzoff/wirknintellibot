@@ -14,43 +14,58 @@ return next activity id
 var engine = {
     startNewWorkflow: function (id) {
         //todo: Get workflow from table
+                //-Grab first workflow from workflow table
         //todo: Get start activity(ies) from activity table
+                //-Get 0 activity under first workflow from activity table
         //todo: Create new session ID for this activity
+                //-get session id as it already started when user entered kikusername
+                //save session id in session table
         //todo: Execute start activity(ies)
+                //-execute rand.js
         //todo: return session id
+                //
     },
     resumeWorkflow: function (sessionId) {
         //todo: Get sesion ID from session table
+                //get session id
         //todo: Look up activities in activityinstance table with null date complete
+                //
         //todo: execute activities
     },
     executeActivity: function (sessionId, activityId) {
         //todo: Insert a new row in activityInstance table with null date complete
+                //insert activity instance with current activity id
         //todo: Load the plugin file if not already loaded
+                //get plugin file name and data from activity table
         //todo: Execute plug in
+                //call plugin function with data
         //todo: get the plug in
         var plugin = plugins[pluginName];
         var res = plugin["execute"](json, environment);
         //todo: Check result, if we wait or continue
         if (res == engine.workflowActivityResult.proceed)
             ;//todo: Set the end date of the actvitiyinstance row
+                //update activitinstance table for this activity
     },
     getNextActivities: function (activityId, val) {
         //todo: Load the nextActivity records with from: activityId
+            //get nextActivityid from nextActivity table where thisActivityId == activityId
         //todo: evaluate the eval statements
+            //eval(condition == val)
         //todo: if eval == true, add activity to list of returns
+            //add the activity to return array
     },
     loadPlugin: function(pluginName) {
-    var path = "/scripts/plugins/" + pluginName + ".js";
-    var module = require(current);
-    modules.push(module);
-    done(modules);
-},
-workflowActivityResult: {
-    wait: 1,
+        var path = "/scripts/plugins/" + pluginName + ".js";
+        var module = require(current);
+        modules.push(module);
+        done(modules);
+    },
+    workflowActivityResult: {
+        wait: 1,
         proceed: 2
-},
-plugins: Array()
+    },
+    plugins: Array()
 };
 
 /*
