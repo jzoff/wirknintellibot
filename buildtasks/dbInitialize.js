@@ -8,6 +8,17 @@ mongoose.connect('mongodb://localhost/wirknintellibot');
 /*db.getCollection('activities').remove({});
 db.getCollection('nextactivities').remove({});*/
 
+var workflow = new Workflow({
+    id:     1,
+    name:   'Personality'
+});
+workflow.save();
+
+workflow = new Workflow({
+    id:     2,
+    name:   'Profile'
+});
+workflow.save();
 
 var activity = new Activity({
     id:  0,
@@ -23,8 +34,8 @@ activity = new Activity({
      id:  1,
      plugin: 'kikask.js',
      data: {
-     type: 'text',
-     desc: 'Personality'
+         type: 'text',
+         desc: 'Personality'
      }
 });
 activity.save();
@@ -79,9 +90,6 @@ activity = new Activity({
 });
 console.log(activity);
 activity.save();
-
-
-
 
 var nextActivity = new NextActivity({
     thisActivityId:  0,
@@ -140,6 +148,34 @@ nextActivity = new NextActivity({
 nextActivity.save();
 
 mongoose.disconnect();
+
+/**
+ * workflow
+ * id   name
+ * 1    Personality
+ * 2    Profile
+ */
+/*
+    workflow instance
+    id  workflowid workparentId
+
+user
+date
+1
+null
+workflowinstance added
+return workflowinstance id -instance started for workflow 1
+
+get workflowInstance which 1
+if (no active activity)
+{
+    create activity instance and mark it active
+    execute the start activity
+}
+else
+    execute current active activity
+* */
+
 
 
 /*from    to  value
