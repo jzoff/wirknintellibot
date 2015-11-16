@@ -2,21 +2,25 @@ var request = require('request');
 
 //send kik question for session and username
 var kikask = {};
-kikask.returnFunc = function(username, message){
+kikask.returnFunc = function(username, desc){
     //return desc;
     var choices = ['a', 'b', 'c', 'd'];
-    responses = this.toMessageArray(username, message);
-    responses[responses.length - 1].suggestedResponses = [];
-    for(var i = 0 ; i < choices.length ; i++){
-        responses[responses.length - 1].suggestedResponses.push(choices);
+    var messages = this.toMessageArray(username, desc);
+
+    // Adding suggested responses
+    if(choices){
+        messages[messages.length - 1].suggestedResponses = [];
+        for(var i = 0 ; i < choices.length ; i++){
+            messages[messages.length - 1].suggestedResponses.push(choices[i]);
+        }
     }
     //responses.push(this.toMessageArray(username, message));
-    console.log(responses);
+    console.log(messages);
     //return function() {
         request.post({
             url: 'https://engine.apikik.com/api/v1/message',
             json: {
-                messages: responses
+                messages: messages
             },
             auth: {
                 username: 'wirkn',//BOT_USERNAME,
@@ -44,7 +48,12 @@ kikask.toMessageArray = function(username, o){
                 body: o[i]
             };
         }else{
+            m = JSON.parse(JSON.stringify(o[i]));
+            m.to = username;
+            /*console.log(o[i]);
+            console.log(JSON.stringify(o[i]));
             t = JSON.parse(JSON.stringify(o[i]));
+            console.log('t is ' + t);
             if (t.type === 'text')
             {
                 m = {
@@ -62,6 +71,7 @@ kikask.toMessageArray = function(username, o){
                 };
             }
             m.to = username;
+            console.log('m is ' + m);*/
         }
         res.push(m);
     }

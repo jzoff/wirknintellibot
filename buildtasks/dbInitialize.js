@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/wirknintellibot');
 
 /*db.getCollection('activities').remove({});
-db.getCollection('nextactivities').remove({});*/
+db.getCollection('nextactivities').remove({});
 
 var workflow = new Workflow({
     id:     1,
@@ -18,14 +18,14 @@ workflow = new Workflow({
     id:     2,
     name:   'Profile'
 });
-workflow.save();
+workflow.save();*/
 
 var activity = new Activity({
     id:  0,
     plugin: 'rand.js',
     data: {
         type: 'text',
-        desc: 'Choose Personality Or Profile'
+        desc: 'Personality'
     }
 });
 activity.save();
@@ -35,7 +35,7 @@ activity = new Activity({
      plugin: 'kikask.js',
      data: {
          type: 'text',
-         desc: 'Personality'
+         desc: 'Hi. My name is Cynthia'
      }
 });
 activity.save();
@@ -45,7 +45,7 @@ activity = new Activity({
      plugin: 'kikask.js',
      data: {
      type: 'text',
-     desc: 'Personality'
+     desc: 'Hi. My name is Jon'
      }
 });
 activity.save();
@@ -55,7 +55,7 @@ activity = new Activity({
      plugin: 'kikask.js',
      data: {
      type: 'text',
-     desc: 'Personality'
+     desc: 'Hi. My name is Pedro'
      }
 });
 activity.save();
@@ -65,7 +65,7 @@ activity = new Activity({
      plugin: 'kikask.js',
      data: {
      type: 'text',
-     desc: 'What is your favorite color'
+     desc: 'First question, When you meet up with friends, you like to\n(a) Go Shopping\n(b) Eat, drink, be merry\n(c) Go to a concert\n(d) Do whatever they want'
      }
 });
 activity.save();
@@ -75,7 +75,7 @@ activity = new Activity({
      plugin: 'kikask.js',
      data: {
      type: 'text',
-     desc: 'What is your favorite movie'
+     desc: 'Describe yourself in one word\n(a) Fashionable\n(b) Charming\n(c) Adventurous\n(d) Adaptable'
      }
 });
 activity.save();
@@ -85,8 +85,48 @@ activity = new Activity({
      plugin: 'kikask.js',
      data: {
      type: 'text',
-     desc: 'What is your favorite car'
+     desc: 'I\'ve always wanted to be friends with:\n(a) Floyd Mayweather\n(b) Gordon Ramsey\n(c) Katy Perry\n(d) Kim Kardashian'
      }
+});
+activity.save();
+
+activity = new Activity({
+    id:  7,
+    plugin: 'kikask.js',
+    data: {
+        type: 'text',
+        desc: 'You\'re going to see a movie, which one do you pick:\n(a) The Devil Wears Prada\n(b) The Wolf of Wall Street\n(c) Depicable Me\n(d) I can\'t decide'
+    }
+});
+activity.save();
+
+activity = new Activity({
+    id:  8,
+    plugin: 'kikask.js',
+    data: {
+        type: 'text',
+        desc: 'If you found $100, where would you spend it?\n(a) H&M\n(b) Chipotle Mexican Grill\n(c) Disneyland\n(d) Somewhere at the mall'
+    }
+});
+activity.save();
+
+activity = new Activity({
+    id:  9,
+    plugin: 'kikask.js',
+    data: {
+        type: 'text',
+        desc: 'Your biggest frustration is\n(a) Credit card bills\n(b) Slow service\n(c) Waiting in line\n(d) #Hashtags'
+    }
+});
+activity.save();
+
+activity = new Activity({
+    id:  10,
+    plugin: 'score.js',
+    data: {
+        type: 'text',
+        desc: 'Okay, great.  Give us a minute while we calulate your results'
+    }
 });
 console.log(activity);
 activity.save();
@@ -147,6 +187,33 @@ nextActivity = new NextActivity({
 });
 nextActivity.save();
 
+nextActivity = new NextActivity({
+    thisActivityId:  6,
+    nextActivityId: 7,
+    condition: 'true'
+});
+nextActivity.save();
+
+nextActivity = new NextActivity({
+    thisActivityId:  7,
+    nextActivityId: 8,
+    condition: 'true'
+});
+nextActivity.save();
+
+nextActivity = new NextActivity({
+    thisActivityId:  8,
+    nextActivityId: 9,
+    condition: 'true'
+});
+nextActivity.save();
+
+nextActivity = new NextActivity({
+    thisActivityId:  9,
+    nextActivityId: 10,
+    condition: 'true'
+});
+nextActivity.save();
 mongoose.disconnect();
 
 /**

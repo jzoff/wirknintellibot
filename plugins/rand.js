@@ -4,6 +4,9 @@ rand.returnFunc = function(username, message){
     var possibilities = ['cynthia','jon','pedro'];
     //console.log(possibilities[~~(Math.random() * possibilities.length)]);
     //console.log(desc);
+    /* var greeting = 'Hi. My name is ' + possibilities[~~(Math.random() * possibilities.length)];
+    greeting += '. I\'m going to help you find the rigth job. ' +
+    'Text me when you are ready'*/
     var greeting = 'Hi. I am ' + possibilities[~~(Math.random() * possibilities.length)];
     responses = [{
         type: 'text',

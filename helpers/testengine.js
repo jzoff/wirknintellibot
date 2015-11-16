@@ -26,6 +26,8 @@ var getActivityFromDb = function(id, cb) {
                 currentActivity: startActivity,
                 nextActivities: nextActivities || []
             };
+            //console.log(startActivity);
+            //console.log(nextActivities);
             cb(returnVals);
             //mongoose.disconnect();
             //return res.send(200, currentActivity);
