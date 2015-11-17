@@ -1,8 +1,7 @@
 var request = require('request');
-var rand = {};
-rand.returnFunc = function(username, message,nextActivity){
-    var possibilities = ['cynthia','jon','pedro'];
-    var greeting = 'Hi. I am ' + possibilities[~~(Math.random() * possibilities.length)];
+var greeting = {};
+greeting.returnFunc = function(username, message,nextActivity){
+    var greeting = 'I\'m going to help you find the right job. Text me when you are ready';
     responses = [{
         type: 'text',
         to: username,
@@ -23,22 +22,8 @@ rand.returnFunc = function(username, message,nextActivity){
             console.log('API Error ' + resp.statusCode + ': ' + err);
         }
     });
-
-    request.post({
-        url: 'http://localhost:3000/receive',
-        json: {
-            messages: [{
-                type: 'text',
-                from: 'jasieKang',
-                body: 'cynthia'
-            }]
-        }
-    })
     // }
 
 }
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-module.exports = rand;
+module.exports = greeting;
 //who you going to talk to

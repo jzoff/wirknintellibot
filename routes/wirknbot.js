@@ -3,9 +3,12 @@ var router = express.Router();
 var getRawBody = require('raw-body');
 var crypto = require('crypto');
 var httpClient = require('request');
+var engine = require('../helpers/testengine2');
 
-var BOT_USERNAME = process.env.BOT_USERNAME;
-var API_KEY = process.env.API_KEY;
+/*var BOT_USERNAME = process.env.BOT_USERNAME;
+var API_KEY = process.env.API_KEY;*/
+var BOT_USERNAME='wirkn';
+var API_KEY='80ed2950-8a5f-4643-bbac-b5fc63b90e4a';
 
 router.use('/', function (req, res, next) {
     getRawBody(req, 'utf8', function (err, rawBody) {
@@ -45,10 +48,11 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function (req, res) {
     var messages = req.body.messages || [];
-
+    console.log(messages);
     var responses = [];
     for(var i = 0 ; i < messages.length ; i++){
         //responses = responses.concat(personalityQuiz.processMessage(messages[i]));
+        engine.doYourThing(messages[i].from, messages[i].body)
     }
 
     if (responses.length > 0) {
