@@ -48,10 +48,11 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function (req, res) {
     var messages = req.body.messages || [];
-    console.log(messages);
+
     var responses = [];
     for(var i = 0 ; i < messages.length ; i++){
         //responses = responses.concat(personalityQuiz.processMessage(messages[i]));
+        console.log('wirknbot from:' + messages[i].from + ' body:' +messages[i].body );
         engine.doYourThing(messages[i].from, messages[i].body)
     }
 

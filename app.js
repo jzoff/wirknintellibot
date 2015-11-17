@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var wirknbot = require('./routes/wirknbot');
+var mongoose = require('mongoose');
+var db = mongoose.connect('mongodb://localhost/mybot');
 
 var app = express();
 

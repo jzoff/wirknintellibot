@@ -54,6 +54,9 @@ var engine = {
             //eval(condition == val)
         //todo: if eval == true, add activity to list of returns
             //add the activity to return array
+        getActivityFromDb(activityId,val,function(returnVals){
+            console.log(returnVals.nextActivities);
+        });
     },
     loadPlugin: function(pluginName) {
         var path = "/scripts/plugins/" + pluginName + ".js";
@@ -68,6 +71,37 @@ var engine = {
     plugins: Array()
 };
 
+var Activity = require('../model/Activity.js');
+var NextActivity = require('../model/NextActivity.js');
+var User = require('../model/User.js');
+
+var mongoose = require('mongoose');
+var db = mongoose.connect('mongodb://localhost/mybot');
+//Load the nextActivity records with from: activityId
+var getActivityFromDb = function(activityId, input, cb) {
+    var query = NextActivity.find({thisActivityId : activityId});
+        query.exec(function (err, nextActivities) {
+            if (err) {
+                console.log(err);//return res.send(400);
+            }
+
+            var arr = [];
+            for (var i = 0; i < nextActivities.length; i++) {
+                if (eval(nextActivities[i].condition)) {
+                    arr.push(nextActivities[i].nextActivityId);
+                }
+            }
+            var returnVals = {
+                nextActivities: arr
+            };
+
+            cb(returnVals);
+            mongoose.disconnect();
+            //return res.send(200, currentActivity);
+        });
+}
+
+engine.getNextActivities(0,'cynthia');
 /*
 //get 0 activity
 var Activities = require('../model/Activity.js');

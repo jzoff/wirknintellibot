@@ -2,8 +2,8 @@ var Activity = require('../model/Activity.js');
 var NextActivity = require('../model/NextActivity.js');
 var User = require('../model/User.js');
 
-var mongoose = require('mongoose');
-var db = mongoose.connect('mongodb://localhost/mybot');
+/*var mongoose = require('mongoose');
+var db = mongoose.connect('mongodb://localhost/mybot');*/
 
 var getActivityFromDb = function(id, cb) {
     var query = Activity.findOne({id: id});
@@ -29,7 +29,6 @@ var getActivityFromDb = function(id, cb) {
             //console.log(startActivity);
             //console.log(nextActivities);
             cb(returnVals);
-            //mongoose.disconnect();
             //return res.send(200, currentActivity);
         });
     });
@@ -58,7 +57,7 @@ var getUserFromDb = function(username, cb) {
     });
 }
 var updateUserDb = function(username, activity, cb) {
-    //console.log('in update',username, activity);
+    console.log('updateUserDb username:' + username + ' activity:' + activity);
     //A.findOneAndUpdate(conditions, update, options, callback) // executes
     var query = User.findOneAndUpdate({ username: username }, { current: activity }, {new: true});//, function (err, user) {
     query.exec(function (err, user) {
@@ -72,7 +71,6 @@ var updateUserDb = function(username, activity, cb) {
             user: user
         };
         cb(returnVals);
-        //mongoose.disconnect();
         //return res.send(200, currentActivity);
     });
 }
@@ -96,11 +94,11 @@ Engine.execute = function(username,datas,input,cb) {
 
         //plugin.returnFunc(username, datas.currentActivity.data.desc)();
         console.log(datas.nextActivities)
-        console.log(input)
+        //console.log(input)
         for (var i = 0; i < datas.nextActivities.length; i++) {
-            if (eval(datas.nextActivities[i].condition)) {
+            if (datas.currentActivity.id == 0 || eval(datas.nextActivities[i].condition)) {
                 arr.push(datas.nextActivities[i].nextActivityId)
-                console.log(datas.nextActivities[i].nextActivityId)
+                //console.log(datas.nextActivities[i].nextActivityId)
             }
         }
     }
@@ -115,8 +113,9 @@ Engine.execute = function(username,datas,input,cb) {
 Engine.doYourThing = function(username, input) {
     /*var username = 'cynthia';
     var answer = 'a';*/
+    console.log('Engine username:' + username + ' input:' + input);
     getUserFromDb(username,function(returnUser){//get current activity for the user
-        console.log('username:' +returnUser.user.username, 'currentId:' + returnUser.user.current );
+        console.log('getUser username:' +returnUser.user.username, 'currentId:' + returnUser.user.current );
         var username = returnUser.user.username;
         var activity = returnUser.user.current === null ? 0 : returnUser.user.current ;
 
@@ -125,7 +124,7 @@ Engine.doYourThing = function(username, input) {
             Engine.execute(username,returnVals,input,function(arr){//get matching nextactivity based on condition
                 if (arr.length <= 0) {
                     console.log('done for:'+ username);
-                    mongoose.disconnect();
+                    //mongoose.disconnect();
                 }
                 else {
                     arr.forEach(function (v) {
@@ -133,8 +132,8 @@ Engine.doYourThing = function(username, input) {
                     });
 
                     updateUserDb(username, arr[0], function (user) { //update user.current activity
-                        console.log(username, arr[0], user.user.current, user.user.value, user.user.username);
-                        mongoose.disconnect();
+                        console.log(username + ' current:' + user.user.current + ' val: ' + user.user.value);
+                        //mongoose.disconnect();
                     });
                 }
 
@@ -143,7 +142,7 @@ Engine.doYourThing = function(username, input) {
         })
     })
 }
-//Engine.doYourThing();
+Engine.doYourThing('jasiekang','');
 
 module.exports = Engine;
 //first test

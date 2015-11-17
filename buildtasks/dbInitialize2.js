@@ -324,21 +324,21 @@ console.log(activity);
 var nextActivity = new NextActivity({
     thisActivityId:  0,
     nextActivityId: 1,
-    condition: "username=='cynthia'"
+    condition: "input=='cynthia'"
 });
 nextActivity.save();
 
 nextActivity = new NextActivity({
     thisActivityId:  0,
     nextActivityId: 2,
-    condition: "username=='jon'"
+    condition: "input=='jon'"
 });
 nextActivity.save();
 
 nextActivity = new NextActivity({
     thisActivityId:  0,
     nextActivityId: 3,
-    condition: "username=='pedro'"
+    condition: "input=='pedro'"
 });
 nextActivity.save();
 
@@ -409,26 +409,26 @@ nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  4,
     nextActivityId: 4100,
-    condition: "answer=='a'"
+    condition: "input=='a'"
 });
 nextActivity.save();
 
 nextActivity = new NextActivity({
     thisActivityId:  4,
     nextActivityId: 4200,
-    condition: "answer=='b'"
+    condition: "input=='b'"
 });
 nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  4,
     nextActivityId: 4300,
-    condition: "answer=='c'"
+    condition: "input=='c'"
 });
 nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  4,
     nextActivityId: 4400,
-    condition: "answer=='d'"
+    condition: "input=='d'"
 });
 nextActivity.save();
 
@@ -462,26 +462,26 @@ nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  5,
     nextActivityId: 5100,
-    condition: "answer=='a'"
+    condition: "input=='a'"
 });
 nextActivity.save();
 
 nextActivity = new NextActivity({
     thisActivityId:  5,
     nextActivityId: 5200,
-    condition: "answer=='b'"
+    condition: "input=='b'"
 });
 nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  5,
     nextActivityId: 5300,
-    condition: "answer=='c'"
+    condition: "input=='c'"
 });
 nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  5,
     nextActivityId: 5400,
-    condition: "answer=='d'"
+    condition: "input=='d'"
 });
 nextActivity.save();
 
@@ -515,26 +515,26 @@ nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  6,
     nextActivityId: 6100,
-    condition: "answer=='a'"
+    condition: "input=='a'"
 });
 nextActivity.save();
 
 nextActivity = new NextActivity({
     thisActivityId:  6,
     nextActivityId: 6200,
-    condition: "answer=='b'"
+    condition: "input=='b'"
 });
 nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  6,
     nextActivityId: 6300,
-    condition: "answer=='c'"
+    condition: "input=='c'"
 });
 nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  6,
     nextActivityId: 6400,
-    condition: "answer=='d'"
+    condition: "input=='d'"
 });
 nextActivity.save();
 
@@ -568,26 +568,26 @@ nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  7,
     nextActivityId: 7100,
-    condition: "answer=='a'"
+    condition: "input=='a'"
 });
 nextActivity.save();
 
 nextActivity = new NextActivity({
     thisActivityId:  7,
     nextActivityId: 7200,
-    condition: "answer=='b'"
+    condition: "input=='b'"
 });
 nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  7,
     nextActivityId: 7300,
-    condition: "answer=='c'"
+    condition: "input=='c'"
 });
 nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  7,
     nextActivityId: 7400,
-    condition: "answer=='d'"
+    condition: "input=='d'"
 });
 nextActivity.save();
 
@@ -621,26 +621,26 @@ nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  8,
     nextActivityId: 8100,
-    condition: "answer=='a'"
+    condition: "input=='a'"
 });
 nextActivity.save();
 
 nextActivity = new NextActivity({
     thisActivityId:  8,
     nextActivityId: 8200,
-    condition: "answer=='b'"
+    condition: "input=='b'"
 });
 nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  8,
     nextActivityId: 8300,
-    condition: "answer=='c'"
+    condition: "input=='c'"
 });
 nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  8,
     nextActivityId: 8400,
-    condition: "answer=='d'"
+    condition: "input=='d'"
 });
 nextActivity.save();
 
@@ -674,26 +674,26 @@ nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  9,
     nextActivityId: 9100,
-    condition: "answer=='a'"
+    condition: "input=='a'"
 });
 nextActivity.save();
 
 nextActivity = new NextActivity({
     thisActivityId:  9,
     nextActivityId: 9200,
-    condition: "answer=='b'"
+    condition: "input=='b'"
 });
 nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  9,
     nextActivityId: 9300,
-    condition: "answer=='c'"
+    condition: "input=='c'"
 });
 nextActivity.save();
 nextActivity = new NextActivity({
     thisActivityId:  9,
     nextActivityId: 9400,
-    condition: "answer=='d'"
+    condition: "input=='d'"
 });
 nextActivity.save();
 
