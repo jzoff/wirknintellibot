@@ -1,6 +1,6 @@
 var request = require('request');
 var rand = {};
-rand.returnFunc = function(username, message, nextActivity){
+rand.returnFunc = function(username, message, nextActivity, cb){
     var possibilities = ['cynthia','jon','pedro'];
     var pickRandomName = possibilities[~~(Math.random() * possibilities.length)];
     console.log('rand pickRandomName:' + pickRandomName);
@@ -31,11 +31,17 @@ rand.returnFunc = function(username, message, nextActivity){
         json: {
             messages: [{
                 type: 'text',
-                from: 'jasiekang',
+                from: 'cheshire_howe',
                 body: pickRandomName//'cynthia'
             }]
         }
     });
+
+    var output = pickRandomName;
+
+    if (cb) {
+        cb(output); // params in here get passed back to engine
+    }
 
     /*var getActivityFromDb = function(id, cb) {
         var query = Activity.findOne({id: id});

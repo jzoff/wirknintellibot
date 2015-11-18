@@ -2,8 +2,8 @@ var Activity = require('../model/Activity.js');
 var NextActivity = require('../model/NextActivity.js');
 var config = require('../config/db');
 var mongoose = require('mongoose');
-//mongoose.connect(config.connectionString);
-mongoose.connect('mongodb://localhost/mybot');
+mongoose.connect(config.connectionString);
+//mongoose.connect('mongodb://localhost/mybot');
 
 var activity = new Activity({
     id:  0,

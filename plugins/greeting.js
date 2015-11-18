@@ -1,6 +1,6 @@
 var request = require('request');
 var greeting = {};
-greeting.returnFunc = function(username, message,nextActivity){
+greeting.returnFunc = function(username, message, nextActivity, cb){
     var greeting = 'I\'m going to help you find the right job. Text me when you are ready';
     responses = [{
         type: 'text',
@@ -23,6 +23,9 @@ greeting.returnFunc = function(username, message,nextActivity){
         }
     });
     // }
+    if (cb) {
+        cb();
+    }
 
 }
 module.exports = greeting;

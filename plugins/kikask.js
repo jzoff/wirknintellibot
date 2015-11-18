@@ -2,7 +2,7 @@ var request = require('request');
 
 //send kik question for session and username
 var kikask = {};
-kikask.returnFunc = function(username, desc,nextActivity){
+kikask.returnFunc = function(username, desc, nextActivity, cb){
     //return desc;
     var choices = ['a', 'b', 'c', 'd'];
     var messages = this.toMessageArray(username, desc);
@@ -32,6 +32,9 @@ kikask.returnFunc = function(username, desc,nextActivity){
             }
         });
    // }
+        if (cb) {
+            cb();
+        }
 }
 
 kikask.toMessageArray = function(username, o){

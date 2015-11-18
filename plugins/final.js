@@ -1,6 +1,6 @@
 var request = require('request');
 var final = {};
-final.returnFunc = function(username, message,nextActivity){
+final.returnFunc = function(username, message,nextActivity, cb){
     responses = [{
         type: 'text',
         to: username,
@@ -22,6 +22,9 @@ final.returnFunc = function(username, message,nextActivity){
         }
     });
     // }
+    if (cb) {
+        cb();
+    }
 
 }
 module.exports = final;

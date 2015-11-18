@@ -2,7 +2,7 @@
 var request = require('request');
 
 var score = {};
-score.returnFunc = function(username, desc,nextActivity){
+score.returnFunc = function(username, desc, nextActivity, cb){
     var User = require('../model/User.js');
 
     var query = User.findOneAndUpdate({ username: username }, {current: nextActivity,$inc: {value:desc}}, {new: true});
@@ -40,6 +40,10 @@ score.returnFunc = function(username, desc,nextActivity){
             console.log('API Error ' + resp.statusCode + ': ' + err);
         }
     });*/
+
+    if (cb) {
+        cb();
+    }
 }
 
 

@@ -87,13 +87,21 @@ Engine.execute = function(username,datas,input,cb) {
         //console.log('desc             ' + datas.currentActivity.data.desc);
 
         var plugin = require('../plugins/' + datas.currentActivity.plugin);
-        plugin.returnFunc(username, datas.currentActivity.data.desc,datas.nextActivities.length>0 ? datas.nextActivities[0].nextActivityId:-1);
+
+        plugin.returnFunc(username, datas.currentActivity.data.desc, datas.nextActivities.length > 0 ? datas.nextActivities[0].nextActivityId : -1, function(output) {
+
+            // This is where you retrieve the value that the plugin returns
+            // The output of the plugin is available to be used
+            console.log('From callback:\n' + datas.nextActivities);
+            console.log(output);
+
+        });
         //console.log('Question:          ' + plugin.returnFunc(username, datas.currentActivity.data.desc));
 
         console.log('Count:             ' + datas.nextActivities.length);
 
         //plugin.returnFunc(username, datas.currentActivity.data.desc)();
-        console.log(datas.nextActivities)
+        //console.log(datas.nextActivities)
         //console.log(input)
         for (var i = 0; i < datas.nextActivities.length; i++) {
             if (datas.currentActivity.id == 0 || eval(datas.nextActivities[i].condition)) {
@@ -133,6 +141,7 @@ Engine.doYourThing = function(username, input) {
 
                     updateUserDb(username, arr[0], function (user) { //update user.current activity
                         console.log(username + ' current:' + user.user.current + ' val: ' + user.user.value);
+                        console.log('\n\n\n\n\n\n');
                         //mongoose.disconnect();
                     });
                 }
@@ -142,7 +151,7 @@ Engine.doYourThing = function(username, input) {
         })
     })
 }
-Engine.doYourThing('jasiekang','');
+//Engine.doYourThing('jasiekang','');
 
 module.exports = Engine;
 //first test
