@@ -65,7 +65,7 @@ module.exports = {
             activityService.getActivityById(activity, function (activities) {
 
                 //get matching nextactivity based on condition
-                Engine.execute(username, activities, userSession, input, function (nextActivityArr, output) {
+                this.execute(username, activities, userSession, input, function (nextActivityArr, output) {
                     if (nextActivityArr.length <= 0) {
                         console.log('done for:' + username);
                         console.log('\n\n\n');
