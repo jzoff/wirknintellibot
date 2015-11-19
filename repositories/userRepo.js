@@ -64,7 +64,7 @@ module.exports = {
         var query = User.findOneAndUpdate({username: username}, {current: activity}, {new: true});//, function (err, user) {
         query.exec(function (err, user) {
             if (err) {
-                console.log(err);//return res.send(400);
+                console.log(err);
             }
             if (user === null) {
                 console.log('no user');
@@ -72,6 +72,7 @@ module.exports = {
             var returnVals = {
                 user: user
             };
+
             cb(returnVals);
         });
     },

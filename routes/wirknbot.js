@@ -42,7 +42,6 @@ router.use('/', function (req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    //res.render('index', { title: 'Express' });
     res.status(400).send('bad request');
 });
 
@@ -58,22 +57,6 @@ router.post('/', function (req, res) {
 
     if (responses.length > 0) {
         console.log('Responding: ' + JSON.stringify(responses));
-
-        // send the responses through the Chat Engine API
-        /*httpClient.post({
-            url: 'https://engine.apikik.com/api/v1/message',
-            json: {
-                messages: responses
-            },
-            auth: {
-                username: BOT_USERNAME,
-                password: API_KEY
-            }
-        }, function(err, resp, body){
-            if(resp.statusCode !== 200){
-                console.log('API Error ' + resp.statusCode + ': ' + err);
-            }
-        });*/
     }
 
     res.status(200).end();

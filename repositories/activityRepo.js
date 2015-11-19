@@ -7,7 +7,7 @@ module.exports = {
         var query = Activity.findOne({id: id});
         query.exec(function (err, startActivity) {
             if (err) {
-                console.log(err);//return res.send(400);
+                console.log(err);
             }
 
             var query = NextActivity.find({thisActivityId : id});
@@ -16,18 +16,12 @@ module.exports = {
                     console.log(err);//return res.send(400);
                 }
 
-                /*var currentActivity = {id: id, plugin: startActivity.plugin};
-                 currentActivity.nextActivities = nextActivities || [];
-                 cb(currentActivity);*/
-
                 var returnVals = {
                     currentActivity: startActivity,
                     nextActivities: nextActivities || []
                 };
-                //console.log(startActivity);
-                //console.log(nextActivities);
+
                 cb(returnVals);
-                //return res.send(200, currentActivity);
             });
         });
     }

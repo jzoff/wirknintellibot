@@ -49,7 +49,7 @@ module.exports = {
     },
 
     updateSessionDateCompleted: function(session, cb) {
-        session.dateCompleted = Date.Now();
+        session.dateCompleted = new Date();
         userRepo.updateUserSession(session, cb);
     }
 
