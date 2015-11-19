@@ -1,11 +1,12 @@
 //save score under session and username
 var request = require('request');
+var userService = require('../services/userService');
 
 var score = {};
-score.returnFunc = function(username, desc, isActive, nextActivity, cb){
+score.returnFunc = function(username, desc, userSession, nextActivity, cb){
     var User = require('../model/User.js');
 
-    var query = User.findOneAndUpdate({ username: username }, {current: nextActivity,isActive: false,$inc: {value:desc}}, {new: true});
+    /*var query = User.findOneAndUpdate({ username: username }, {current: nextActivity,isActive: false,$inc: {value:desc}}, {new: true});
     query.exec(function (err, user) {
         if (err) {
             console.log(err);//return res.send(400);
@@ -16,7 +17,12 @@ score.returnFunc = function(username, desc, isActive, nextActivity, cb){
         var returnVals = {
             user: user
         };
-    });
+    });*/
+
+    userSession.current = nextActivity;
+    userSession.isActive = false;
+    userSession.value = userSession.value + desc;
+    userService.updateSession(userSession, cb);
 
     /*responses = [{
         type: 'text',
@@ -41,9 +47,9 @@ score.returnFunc = function(username, desc, isActive, nextActivity, cb){
         }
     });*/
 
-    if (cb) {
+    /*if (cb) {
         cb();
-    }
+    }*/
 };
 
 

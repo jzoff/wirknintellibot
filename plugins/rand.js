@@ -1,7 +1,7 @@
 //who you going to talk to
 var request = require('request');
 var rand = {};
-rand.returnFunc = function(username, message, isActive,nextActivity, cb){
+rand.returnFunc = function(username, message, userSession,nextActivity, cb){
     var index = getRandomInt(1,3);
     var possibilities = ['cynthia','jon','pedro'];
     //var pickRandomName = possibilities[~~(Math.random() * possibilities.length)];

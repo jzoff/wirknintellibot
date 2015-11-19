@@ -3,14 +3,14 @@ var User = require('../model/User.js');
 
 var final = {};
 
-final.returnFunc = function(username, message, isActive, nextActivity, cb){
+final.returnFunc = function(username, message, userSession, nextActivity, cb){
     /*responses = [{
         type: 'text',
         to: username,
         body: message
     }];*/
 
-    console.log(responses);
+    //console.log(responses);
 
     var query = User.findOneAndUpdate({ username: username }, {dateCompleted: Date.now()}, {new: true});
     query.exec(function (err, user) {

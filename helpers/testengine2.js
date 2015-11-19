@@ -1,16 +1,15 @@
 var userService = require('../services/userService');
-/*var mongoose = require('mongoose');
-var db = mongoose.connect('mongodb://localhost/mybot');*/
+var activityService = require('../services/activityService');
 
 var Engine = {};
 
-Engine.execute = function(username,datas,isActive,input,cb) {
+Engine.execute = function(username,datas,userSession,input,cb) {
     var arr = [];
     if (datas !== null){
 
         console.log('currentId:         ' + datas.currentActivity.id);
-        console.log('plugin             ' + datas.currentActivity.plugin,' ' + isActive);
-        if(datas.currentActivity.plugin == 'kikask.js' && isActive){
+        console.log('plugin             ' + datas.currentActivity.plugin,' ' + userSession.isActive);
+        if(datas.currentActivity.plugin == 'kikask.js' && userSession.isActive){
             for (var i = 0; i < datas.nextActivities.length; i++) {
                 if (datas.currentActivity.id > 0 && eval(datas.nextActivities[i].condition));
                 {
@@ -21,11 +20,10 @@ Engine.execute = function(username,datas,isActive,input,cb) {
         if (arr.length > 0)//right answer has next activity
         {
             cb(arr);
-        }
-        else {//wrong answer or different plugin
+        } else {//wrong answer or different plugin
             var plugin = require('../plugins/' + datas.currentActivity.plugin);
 
-            plugin.returnFunc(username, datas.currentActivity.data.desc, isActive,
+            plugin.returnFunc(username, datas.currentActivity.data.desc, userSession,
                 datas.nextActivities.length > 0 ? datas.nextActivities[0].nextActivityId : -1,
                 function (output) {
 
@@ -71,9 +69,9 @@ Engine.doYourThing = function(username, input) {
         }*/
         //userService.getCurrentSession(returnUser);
 
-        userService.getActivityById(activity, function(returnVals) {//get all nextactivity based on current
+        activityService.getActivityById(activity, function(returnVals) {//get all nextactivity based on current
 
-            Engine.execute(username, returnVals, isActive, input, function(arr, output) {//get matching nextactivity based on condition
+            Engine.execute(username, returnVals, userSession, input, function(arr, output) {//get matching nextactivity based on condition
                 if (arr.length <= 0) {
                     console.log('done for:'+ username);
                     console.log('\n\n\n');
@@ -86,8 +84,12 @@ Engine.doYourThing = function(username, input) {
                         console.log('nextId:            ' + v);
                     });
                     console.log('update current activity');
-                    userService.updateUserDb(username, arr[0], function (user) { //update user.current activity
+                    /*userService.updateUserDb(username, arr[0], function (user) { //update user.current activity
                         console.log(username + ' current:' + user.user.current + ' val: ' + user.user.value);
+                        Engine.doYourThing(username,'');
+                    });*/
+                    userService.updateSessionCurrent(userSession, arr[0], function(err, sess) {
+                        console.log('current session: ' + sess.current);
                         Engine.doYourThing(username,'');
                     });
                 }

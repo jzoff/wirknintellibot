@@ -1,7 +1,9 @@
 //send kik question for session and username
 var request = require('request');
+var userService = require('../services/userService');
+
 var kikask = {};
-kikask.returnFunc = function(username, desc, isActive, nextActivity, cb){
+kikask.returnFunc = function(username, desc, userSession, nextActivity, cb){
     var choices = ['a', 'b', 'c', 'd'];
     var responses = this.toMessageArray(username, desc);
 
@@ -12,7 +14,7 @@ kikask.returnFunc = function(username, desc, isActive, nextActivity, cb){
             responses[responses.length - 1].suggestedResponses.push(choices[i]);
         }
     }
-    if (!isActive)//false
+    if (!userSession.isActive)//false
     {
         request.post({
             url: 'https://engine.apikik.com/api/v1/message',
@@ -34,8 +36,16 @@ kikask.returnFunc = function(username, desc, isActive, nextActivity, cb){
         console.log('Pick from the options I gave you');
     }
 
-    var User = require('../model/User.js');
-    var query = User.findOneAndUpdate({username: username}, {isActive: !isActive}, {new: true});
+    userService.updateSessionIsActive(userSession, !userSession.isActive, function(err, sess) {
+        console.log('current session: ' + sess);
+
+        var output = userSession.isActive ? 'markActive':'inActive';
+        if (cb) {
+            cb(output);
+        }
+    });
+    /*var User = require('../model/User.js');
+    var query = User.findOneAndUpdate({username: username}, {isActive: !userSession.isActive}, {new: true});
     query.exec(function (err, user) {
         if (err) {
             console.log(err);//return res.send(400);
@@ -46,12 +56,9 @@ kikask.returnFunc = function(username, desc, isActive, nextActivity, cb){
         var returnVals = {
             user: user
         };
-    });
+    });*/
 
-    var output = !isActive ? 'markActive':'inActive';
-    if (cb) {
-        cb(output);
-    }
+
 };
 
 kikask.toMessageArray = function(username, o){

@@ -1,87 +1,56 @@
-var Activity = require('../model/Activity.js');
-var NextActivity = require('../model/NextActivity.js');
-var User = require('../model/User.js');
-
 var userRepo = require('../repositories/userRepo');
 
-userService = {};
+module.exports = {
 
-userService.getActivityById = function(id, cb) {
-    var query = Activity.findOne({id: id});
-    query.exec(function (err, startActivity) {
-        if (err) {
-            console.log(err);//return res.send(400);
-        }
+    getUserByUsername: function(username, cb) {
+        userRepo.getUserByUsername(username, cb);
+    },
 
-        var query = NextActivity.find({thisActivityId : id});
-        query.exec(function (err, nextActivities) {
+    getOrCreateUserByUsername: function(username, cb) {
+        userRepo.getUserByUsername(username, function(err, user) {
+            var returnVals = {};
+
             if (err) {
-                console.log(err);//return res.send(400);
-            }
-
-            /*var currentActivity = {id: id, plugin: startActivity.plugin};
-             currentActivity.nextActivities = nextActivities || [];
-             cb(currentActivity);*/
-
-            var returnVals = {
-                currentActivity: startActivity,
-                nextActivities: nextActivities || []
-            };
-            //console.log(startActivity);
-            //console.log(nextActivities);
-            cb(returnVals);
-            //return res.send(200, currentActivity);
-        });
-    });
-};
-
-userService.getOrCreateUserByUsername = function(username, cb) {
-    userRepo.getUserByUsername(username, function(err, user) {
-        var returnVals = {};
-
-        if (err) {
-            userRepo.createUser(username, function(err, user) {
+                userRepo.createUser(username, function(err, user) {
+                    if (cb) {
+                        cb(user);
+                    }
+                });
+            } else {
                 if (cb) {
                     cb(user);
                 }
-                return;
-            });
-        } else {
-            if (cb) {
-                cb(user);
             }
-            return;
-        }
-    });
-};
-
-userService.getCurrentSessionByUsername = function(username, cb) {
-    this.getOrCreateUserByUsername(username, function(user) {
-        var userSession = user.session.filter(function(sess) {
-            return sess.dateCompleted === null;
         });
-        cb(userSession);
-    });
+    },
+
+    getCurrentSessionByUsername: function(username, cb) {
+        this.getOrCreateUserByUsername(username, function(user) {
+            for (var i = 0; i < user.session.length; i++) {
+                if (user.session[i].dateCompleted === null) {
+                    cb(user.session[i]);
+                }
+            }
+        });
+    },
+
+    updateSession: function(session, cb) {
+        userRepo.updateUserSession(session, cb);
+    },
+
+    updateSessionCurrent: function(session, current, cb) {
+        session.current = current;
+        userRepo.updateUserSession(session, cb);
+    },
+
+    updateSessionIsActive: function(session, isActive, cb) {
+        session.isActive = isActive;
+        userRepo.updateUserSession(session, cb);
+    },
+
+    updateSessionDateCompleted: function(session, cb) {
+        session.dateCompleted = Date.Now();
+        userRepo.updateUserSession(session, cb);
+    }
+
 };
-
-userService.updateUserDb = function(username, activity, cb) {
-    console.log('updateUserDb username:' + username + ' activity:' + activity);
-    //A.findOneAndUpdate(conditions, update, options, callback) // executes
-    var query = User.findOneAndUpdate({ username: username }, { current: activity }, {new: true});//, function (err, user) {
-    query.exec(function (err, user) {
-        if (err) {
-            console.log(err);//return res.send(400);
-        }
-        if(user === null) {
-            console.log('no user');
-        }
-        var returnVals = {
-            user: user
-        };
-        cb(returnVals);
-        //return res.send(200, currentActivity);
-    });
-};
-
-module.exports = userService;
-
