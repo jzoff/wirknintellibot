@@ -6,7 +6,7 @@ var userRepo = require('../repositories/userRepo');
 
 userService = {};
 
-userService.getActivityFromDb = function(id, cb) {
+userService.getActivityById = function(id, cb) {
     var query = Activity.findOne({id: id});
     query.exec(function (err, startActivity) {
         if (err) {
@@ -35,25 +35,32 @@ userService.getActivityFromDb = function(id, cb) {
     });
 };
 
-userService.getUserFromDb = function(username, cb) {
+userService.getOrCreateUserByUsername = function(username, cb) {
     userRepo.getUserByUsername(username, function(err, user) {
         var returnVals = {};
 
         if (err) {
             userRepo.createUser(username, function(err, user) {
-                returnVals.user = user;
                 if (cb) {
-                    cb(returnVals);
+                    cb(user);
                 }
                 return;
             });
         } else {
-            returnVals.user = user;
             if (cb) {
-                cb(returnVals);
+                cb(user);
             }
             return;
         }
+    });
+};
+
+userService.getCurrentSessionByUsername = function(username, cb) {
+    this.getOrCreateUserByUsername(username, function(user) {
+        var userSession = user.session.filter(function(sess) {
+            return sess.dateCompleted === null;
+        });
+        cb(userSession);
     });
 };
 

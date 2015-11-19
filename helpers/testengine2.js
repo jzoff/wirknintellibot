@@ -60,19 +60,20 @@ Engine.doYourThing = function(username, input) {
     /*var username = 'cynthia';
     var answer = 'a';*/
     console.log('Engine username:' + username + ' input:' + input);
-    userService.getUserFromDb(username, function(returnUser){//get current activity for the user
-        console.log('getUser username:' + returnUser.user.username, 'currentId:' + returnUser.user.current );
-        var username = returnUser.user.username;
-        var activity = returnUser.user.current === null ? 0 : returnUser.user.current ;
-        var isActive = returnUser.user.isActive;
-        if (returnUser.user.dateCompleted){
+    userService.getCurrentSessionByUsername(username, function(userSession){//get current activity for the user
+        console.log('getUserByUsername username:' + username, 'currentId:' + userSession.current );
+        //var username = returnUser.username;
+        var activity = userSession.current === null ? 0 : userSession.current ;
+        var isActive = userSession.isActive;
+         /*if (returnUser.user.dateCompleted){
             console.log('Activity completed');
             return;
-        }
+        }*/
+        //userService.getCurrentSession(returnUser);
 
-        userService.getActivityFromDb(activity, function(returnVals) {//get all nextactivity based on current
+        userService.getActivityById(activity, function(returnVals) {//get all nextactivity based on current
 
-            Engine.execute(username,returnVals,isActive,input,function(arr,output){//get matching nextactivity based on condition
+            Engine.execute(username, returnVals, isActive, input, function(arr, output) {//get matching nextactivity based on condition
                 if (arr.length <= 0) {
                     console.log('done for:'+ username);
                     console.log('\n\n\n');

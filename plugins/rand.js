@@ -58,7 +58,7 @@ module.exports = rand;
  return Math.floor(Math.random() * (max - min + 1)) + min;
  }
  /*
-var getActivityFromDb = function(id, cb) {
+var getActivityById = function(id, cb) {
  var query = Activity.findOne({id: id});
  query.exec(function (err, startActivity) {
  if (err) {
@@ -102,7 +102,7 @@ var getActivityFromDb = function(id, cb) {
  };
  });
 
- getActivityFromDb(0, function(datas) {//get all nextactivity based on 0
+ getActivityById(0, function(datas) {//get all nextactivity based on 0
  var input = pickRandomName;
  if (datas !== null){
  for (var i = 0; i < datas.nextActivities.length; i++) {

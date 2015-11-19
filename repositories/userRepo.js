@@ -40,9 +40,14 @@ module.exports = {
             } else {
                 user = new User({
                     username: username,
-                    current: null,
-                    value: 0
+                    session: [
+                        {
+                            current: null,
+                            value: 0
+                        }
+                    ]
                 });
+
                 user.save();
 
                 if (cb) {

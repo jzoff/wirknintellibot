@@ -111,7 +111,7 @@ var engine = {
 
     init: function(username,input){
         console.log('Engine username:' + username + ' input:' + input);
-        userService.getUserFromDb(username,function(returnUser){//get current activity for the user
+        userService.getUserByUsername(username,function(returnUser){//get current activity for the user
             username = returnUser.user.username;
             input = input;
             currentActivity = returnUser.user.current === null ? 0 : returnUser.user.current ;
@@ -128,7 +128,7 @@ var engine = {
         //-execute rand.js
         //todo: return session id
 
-        userService.getActivityFromDb(id, function(datas) {//get 0 activity and next activities
+        userService.getActivityById(id, function(datas) {//get 0 activity and next activities
             var arr = [];
             if (datas !== null){
                 //execute plug in
