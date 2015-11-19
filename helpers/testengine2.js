@@ -1,55 +1,7 @@
 var userService = require('../services/userService');
 var activityService = require('../services/activityService');
 
-module.exports = {
-
-    execute: function (username, activities, userSession, input, cb) {
-        var nextActivityArr = [];
-        if (activities !== null) {
-
-            console.log('currentId:         ' + activities.currentActivity.id);
-            console.log('plugin             ' + activities.currentActivity.plugin, ' ' + userSession.isActive);
-
-            if (activities.currentActivity.plugin == 'kikask.js' && userSession.isActive) {
-                for (var i = 0; i < activities.nextActivities.length; i++) {
-                    if (activities.currentActivity.id > 0 && eval(activities.nextActivities[i].condition)) {
-                        nextActivityArr.push(activities.nextActivities[i].nextActivityId);
-                    }
-                }
-            }
-
-            //right answer has next activity
-            if (nextActivityArr.length > 0) {
-                cb(nextActivityArr);
-            }
-            //wrong answer or different plugin
-            else {
-                var plugin = require('../plugins/' + activities.currentActivity.plugin);
-
-                var currentActivityDesc = activities.currentActivity.data.desc;
-                var nextActivityId = activities.nextActivities.length > 0 ? activities.nextActivities[0].nextActivityId : -1;
-
-                plugin.returnFunc(username, currentActivityDesc, userSession, nextActivityId, function (output) {
-                    // The output of the plugin is available to be used
-
-                    if (!(output === 'markActive')) {
-                        for (var i = 0; i < activities.nextActivities.length; i++) {
-                            if (activities.currentActivity.id === 0 && eval(activities.nextActivities[i].condition === output)) {
-                                nextActivityArr.push(activities.nextActivities[i].nextActivityId);
-                            }
-                            else if (activities.currentActivity.id > 0 && eval(activities.nextActivities[i].condition)) {
-                                nextActivityArr.push(activities.nextActivities[i].nextActivityId);
-                            }
-                        }
-
-                    }
-
-                    cb(nextActivityArr, output);
-                });
-            }
-        }
-    },
-
+var Engine = {
     doYourThing: function (username, input) {
         console.log('Engine username:' + username + ' input:' + input);
 
@@ -65,7 +17,7 @@ module.exports = {
             activityService.getActivityById(activity, function (activities) {
 
                 //get matching nextactivity based on condition
-                this.execute(username, activities, userSession, input, function (nextActivityArr, output) {
+                execute(username, activities, userSession, input, function (nextActivityArr, output) {
                     if (nextActivityArr.length <= 0) {
                         console.log('done for:' + username);
                         console.log('\n\n\n');
@@ -90,3 +42,52 @@ module.exports = {
         });
     }
 };
+
+function execute(username, activities, userSession, input, cb) {
+    var nextActivityArr = [];
+    if (activities !== null) {
+
+        console.log('currentId:         ' + activities.currentActivity.id);
+        console.log('plugin             ' + activities.currentActivity.plugin, ' ' + userSession.isActive);
+
+        if (activities.currentActivity.plugin == 'kikask.js' && userSession.isActive) {
+            for (var i = 0; i < activities.nextActivities.length; i++) {
+                if (activities.currentActivity.id > 0 && eval(activities.nextActivities[i].condition)) {
+                    nextActivityArr.push(activities.nextActivities[i].nextActivityId);
+                }
+            }
+        }
+
+        //right answer has next activity
+        if (nextActivityArr.length > 0) {
+            cb(nextActivityArr);
+        }
+        //wrong answer or different plugin
+        else {
+            var plugin = require('../plugins/' + activities.currentActivity.plugin);
+
+            var currentActivityDesc = activities.currentActivity.data.desc;
+            var nextActivityId = activities.nextActivities.length > 0 ? activities.nextActivities[0].nextActivityId : -1;
+
+            plugin.returnFunc(username, currentActivityDesc, userSession, nextActivityId, function (output) {
+                // The output of the plugin is available to be used
+
+                if (!(output === 'markActive')) {
+                    for (var i = 0; i < activities.nextActivities.length; i++) {
+                        if (activities.currentActivity.id === 0 && eval(activities.nextActivities[i].condition === output)) {
+                            nextActivityArr.push(activities.nextActivities[i].nextActivityId);
+                        }
+                        else if (activities.currentActivity.id > 0 && eval(activities.nextActivities[i].condition)) {
+                            nextActivityArr.push(activities.nextActivities[i].nextActivityId);
+                        }
+                    }
+
+                }
+
+                cb(nextActivityArr, output);
+            });
+        }
+    }
+}
+
+module.exports = Engine;
