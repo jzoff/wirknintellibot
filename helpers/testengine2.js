@@ -1,120 +1,58 @@
-var Activity = require('../model/Activity.js');
-var NextActivity = require('../model/NextActivity.js');
-var User = require('../model/User.js');
-
-/*var mongoose = require('mongoose');
-var db = mongoose.connect('mongodb://localhost/mybot');*/
-
-var getActivityFromDb = function(id, cb) {
-    var query = Activity.findOne({id: id});
-    query.exec(function (err, startActivity) {
-        if (err) {
-            console.log(err);//return res.send(400);
-        }
-
-        var query = NextActivity.find({thisActivityId : id});
-        query.exec(function (err, nextActivities) {
-            if (err) {
-                console.log(err);//return res.send(400);
-            }
-
-            /*var currentActivity = {id: id, plugin: startActivity.plugin};
-             currentActivity.nextActivities = nextActivities || [];
-             cb(currentActivity);*/
-
-            var returnVals = {
-                currentActivity: startActivity,
-                nextActivities: nextActivities || []
-            };
-            //console.log(startActivity);
-            //console.log(nextActivities);
-            cb(returnVals);
-            //return res.send(200, currentActivity);
-        });
-    });
-}
-
-var getUserFromDb = function(username, cb) {
-    var query = User.findOne({username: username});
-    query.exec(function (err, user) {
-        if (err) {
-            console.log(err);//return res.send(400);
-        }
-        if(user === null) {
-            console.log('no user');
-            user = new User({
-                username: username,
-                current: null,
-                value: 0
-            });
-            user.save();
-        }
-        var returnVals = {
-            user: user
-        };
-        cb(returnVals);
-        //return res.send(200, currentActivity);
-    });
-}
-var updateUserDb = function(username, activity, cb) {
-    console.log('updateUserDb username:' + username + ' activity:' + activity);
-    //A.findOneAndUpdate(conditions, update, options, callback) // executes
-    var query = User.findOneAndUpdate({ username: username }, { current: activity }, {new: true});//, function (err, user) {
-    query.exec(function (err, user) {
-        if (err) {
-            console.log(err);//return res.send(400);
-        }
-        if(user === null) {
-            console.log('no user');
-        }
-        var returnVals = {
-            user: user
-        };
-        cb(returnVals);
-        //return res.send(200, currentActivity);
-    });
-}
-
+var dbFunc = require('./DBFunctions');
+var mongoose = require('mongoose');
+var db = mongoose.connect('mongodb://localhost/mybot');
 
 var Engine = {}
 
-Engine.execute = function(username,datas,input,cb) {
-    //console.log(datas);
+Engine.execute = function(username,datas,isActive,input,cb) {
     var arr = []
     if (datas !== null){
+
         console.log('currentId:         ' + datas.currentActivity.id);
-        console.log('plugin             ' + datas.currentActivity.plugin);
-        //console.log('desc             ' + datas.currentActivity.data.desc);
-
-        var plugin = require('../plugins/' + datas.currentActivity.plugin);
-
-        plugin.returnFunc(username, datas.currentActivity.data.desc, datas.nextActivities.length > 0 ? datas.nextActivities[0].nextActivityId : -1, function(output) {
-
-            // This is where you retrieve the value that the plugin returns
-            // The output of the plugin is available to be used
-            console.log('From callback:\n' + datas.nextActivities);
-            console.log(output);
-
-        });
-        //console.log('Question:          ' + plugin.returnFunc(username, datas.currentActivity.data.desc));
-
-        console.log('Count:             ' + datas.nextActivities.length);
-
-        //plugin.returnFunc(username, datas.currentActivity.data.desc)();
-        //console.log(datas.nextActivities)
-        //console.log(input)
-        for (var i = 0; i < datas.nextActivities.length; i++) {
-            if (datas.currentActivity.id == 0 || eval(datas.nextActivities[i].condition)) {
-                arr.push(datas.nextActivities[i].nextActivityId)
-                //console.log(datas.nextActivities[i].nextActivityId)
+        console.log('plugin             ' + datas.currentActivity.plugin,' ' + isActive);
+        if(datas.currentActivity.plugin == 'kikask.js' && isActive){
+            for (var i = 0; i < datas.nextActivities.length; i++) {
+                if (datas.currentActivity.id > 0 && eval(datas.nextActivities[i].condition))
+                {
+                    arr.push(datas.nextActivities[i].nextActivityId)
+                }
             }
         }
+        if (arr.length > 0)//right answer has next activity
+        {
+            cb(arr);
+        }
+        else {//wrong answer or different plugin
+            var plugin = require('../plugins/' + datas.currentActivity.plugin);
+
+            plugin.returnFunc(username, datas.currentActivity.data.desc, isActive,
+                datas.nextActivities.length > 0 ? datas.nextActivities[0].nextActivityId : -1,
+                function (output) {
+
+                    // This is where you retrieve the value that the plugin returns
+                    // The output of the plugin is available to be used
+                    /*console.log('From callback:\n' + datas.nextActivities);
+                     console.log('plugin output      ' + output);
+                     console.log('Count:             ' + datas.nextActivities.length);*/
+                    if (output === 'markActive') {
+                        console.log('marked active')
+                    }
+                    else {
+                        for (var i = 0; i < datas.nextActivities.length; i++) {
+                            if (datas.currentActivity.id === 0 && eval(datas.nextActivities[i].condition === output)) {
+                                arr.push(datas.nextActivities[i].nextActivityId)
+                            }
+                            else if (datas.currentActivity.id > 0 && eval(datas.nextActivities[i].condition)) {
+                                arr.push(datas.nextActivities[i].nextActivityId)
+                            }
+                        }
+
+                    }
+                    cb(arr,output);
+                });
+        }
+
     }
-    // return arr
-    /*arr.forEach(function(v) {
-     console.log('nextId:            ' + v);
-     });*/
-    cb(arr);
 }
 
 //third test
@@ -122,38 +60,70 @@ Engine.doYourThing = function(username, input) {
     /*var username = 'cynthia';
     var answer = 'a';*/
     console.log('Engine username:' + username + ' input:' + input);
-    getUserFromDb(username,function(returnUser){//get current activity for the user
+    DBFunctions.getUserFromDb(username,function(returnUser){//get current activity for the user
         console.log('getUser username:' +returnUser.user.username, 'currentId:' + returnUser.user.current );
         var username = returnUser.user.username;
         var activity = returnUser.user.current === null ? 0 : returnUser.user.current ;
+        var isActive = returnUser.user.isActive;
+        if (returnUser.user.dateCompleted){
+            console.log('Activity completed');
+            return;
+        }
 
-        getActivityFromDb(activity, function(returnVals) {//get all nextactivity based on current
+        DBFunctions.getActivityFromDb(activity, function(returnVals) {//get all nextactivity based on current
 
-            Engine.execute(username,returnVals,input,function(arr){//get matching nextactivity based on condition
+            Engine.execute(username,returnVals,isActive,input,function(arr,output){//get matching nextactivity based on condition
                 if (arr.length <= 0) {
                     console.log('done for:'+ username);
-                    //mongoose.disconnect();
+                    console.log('\n\n\n');
+                    if (output === 'inActive') {
+                        Engine.doYourThing(username,'');
+                    }
                 }
                 else {
                     arr.forEach(function (v) {
                         console.log('nextId:            ' + v);
                     });
-
-                    updateUserDb(username, arr[0], function (user) { //update user.current activity
+                    console.log('update current activity');
+                    DBFunctions.updateUserDb(username, arr[0], function (user) { //update user.current activity
                         console.log(username + ' current:' + user.user.current + ' val: ' + user.user.value);
-                        console.log('\n\n\n\n\n\n');
-                        //mongoose.disconnect();
+                        Engine.doYourThing(username,'');
                     });
                 }
+                console.log('\n\n\n');
+                //mongoose.disconnect();
 
             });
 
         })
     })
 }
-//Engine.doYourThing('jasiekang','');
+
+Engine.doYourThing('jasiekang1','g');
 
 module.exports = Engine;
+
+/*
+
+ var class1 = function(param1, param2) {
+ this.param1 = param1;
+ this.param2 = param2;
+ }
+
+ class1.prototype.myFunc = function() {
+ console.log(this.param1);
+ }
+
+ var c1 = new class1('a', 'b');
+Engine.testInput = function(){
+    var possibilities = ['cynthia','jon','pedro'];
+    var input = possibilities[0];
+    //var input ='cynthia';
+    console.log(eval('cynthia'==input));
+}
+Engine.testInput();
+*/
+
 //first test
 //Engine.execute(arrOut);
 

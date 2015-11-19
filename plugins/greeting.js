@@ -1,6 +1,6 @@
 var request = require('request');
 var greeting = {};
-greeting.returnFunc = function(username, message, nextActivity, cb){
+greeting.returnFunc = function(username, message, isActive,nextActivity, cb){
     var greeting = 'I\'m going to help you find the right job. Text me when you are ready';
     responses = [{
         type: 'text',
@@ -8,7 +8,8 @@ greeting.returnFunc = function(username, message, nextActivity, cb){
         body: greeting
     }];
 
-    request.post({
+    console.log('greeting :' + responses[0].body);
+    /*request.post({
         url: 'https://engine.apikik.com/api/v1/message',
         json: {
             messages: responses
@@ -21,8 +22,8 @@ greeting.returnFunc = function(username, message, nextActivity, cb){
         if(resp.statusCode !== 200){
             console.log('API Error ' + resp.statusCode + ': ' + err);
         }
-    });
-    // }
+    });*/
+
     if (cb) {
         cb();
     }

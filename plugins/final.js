@@ -1,13 +1,28 @@
 var request = require('request');
 var final = {};
-final.returnFunc = function(username, message,nextActivity, cb){
+final.returnFunc = function(username, message,isActive,nextActivity, cb){
     responses = [{
         type: 'text',
         to: username,
         body: message
     }];
 
-    request.post({
+    console.log(responses);
+    var User = require('../model/User.js');
+
+    var query = User.findOneAndUpdate({ username: username }, {dateCompleted: Date.now()}, {new: true});
+    query.exec(function (err, user) {
+        if (err) {
+            console.log(err);//return res.send(400);
+        }
+        if(user === null) {
+            console.log('no user');
+        }
+        var returnVals = {
+            user: user
+        };
+    });
+    /*request.post({
         url: 'https://engine.apikik.com/api/v1/message',
         json: {
             messages: responses
@@ -20,8 +35,8 @@ final.returnFunc = function(username, message,nextActivity, cb){
         if(resp.statusCode !== 200){
             console.log('API Error ' + resp.statusCode + ': ' + err);
         }
-    });
-    // }
+    });*/
+
     if (cb) {
         cb();
     }

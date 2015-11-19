@@ -1,26 +1,45 @@
-var request = require('request');
-
 //send kik question for session and username
+var request = require('request');
 var kikask = {};
-kikask.returnFunc = function(username, desc, nextActivity, cb){
-    //return desc;
+kikask.returnFunc = function(username, desc, isActive, nextActivity, cb){
     var choices = ['a', 'b', 'c', 'd'];
-    var messages = this.toMessageArray(username, desc);
+    var responses = this.toMessageArray(username, desc);
 
     // Adding suggested responses
     if(choices){
-        messages[messages.length - 1].suggestedResponses = [];
+        responses[responses.length - 1].suggestedResponses = [];
         for(var i = 0 ; i < choices.length ; i++){
-            messages[messages.length - 1].suggestedResponses.push(choices[i]);
+            responses[responses.length - 1].suggestedResponses.push(choices[i]);
         }
     }
-    //responses.push(this.toMessageArray(username, message));
-    console.log(messages);
+    if (!isActive)//false
+    {
+        console.log('kikask :' + responses[0].body);
+    }
+    else{
+        console.log('Pick from the options I gave you');
+    }
+
+    var User = require('../model/User.js');
+    var query = User.findOneAndUpdate({username: username}, {isActive: !isActive}, {new: true});
+    query.exec(function (err, user) {
+        if (err) {
+            console.log(err);//return res.send(400);
+        }
+        if (user === null) {
+            console.log('no user');
+        }
+        var returnVals = {
+            user: user
+        };
+    });
+
+    /*
     //return function() {
         request.post({
             url: 'https://engine.apikik.com/api/v1/message',
             json: {
-                messages: messages
+                messages: responses
             },
             auth: {
                 username: 'wirkn',//BOT_USERNAME,
@@ -31,10 +50,11 @@ kikask.returnFunc = function(username, desc, nextActivity, cb){
                 console.log('API Error ' + resp.statusCode + ': ' + err);
             }
         });
-   // }
-        if (cb) {
-            cb();
-        }
+   // }*/
+    var output = !isActive ? 'markActive':'inActive';
+    if (cb) {
+        cb(output);
+    }
 }
 
 kikask.toMessageArray = function(username, o){

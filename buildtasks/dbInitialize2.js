@@ -324,21 +324,21 @@ console.log(activity);
 var nextActivity = new NextActivity({
     thisActivityId:  0,
     nextActivityId: 1,
-    condition: "input=='cynthia'"
+    condition: "'cynthia'"
 });
 nextActivity.save();
 
 nextActivity = new NextActivity({
     thisActivityId:  0,
     nextActivityId: 2,
-    condition: "input=='jon'"
+    condition: "'jon'"
 });
 nextActivity.save();
 
 nextActivity = new NextActivity({
     thisActivityId:  0,
     nextActivityId: 3,
-    condition: "input=='pedro'"
+    condition: "'pedro'"
 });
 nextActivity.save();
 

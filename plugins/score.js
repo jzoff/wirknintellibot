@@ -2,10 +2,10 @@
 var request = require('request');
 
 var score = {};
-score.returnFunc = function(username, desc, nextActivity, cb){
+score.returnFunc = function(username, desc, isActive, nextActivity, cb){
     var User = require('../model/User.js');
 
-    var query = User.findOneAndUpdate({ username: username }, {current: nextActivity,$inc: {value:desc}}, {new: true});
+    var query = User.findOneAndUpdate({ username: username }, {current: nextActivity,isActive: false,$inc: {value:desc}}, {new: true});
     query.exec(function (err, user) {
         if (err) {
             console.log(err);//return res.send(400);

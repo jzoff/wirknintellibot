@@ -102,6 +102,102 @@ var getActivityFromDb = function(activityId, input, cb) {
 }
 
 engine.getNextActivities(0,'cynthia');
+
+var engine = {
+    username: '',
+    input:    '',
+    currentActivity: 0,
+    isActive:        false,
+
+    init: function(username,input){
+        console.log('Engine username:' + username + ' input:' + input);
+        DBFunctions.getUserFromDb(username,function(returnUser){//get current activity for the user
+            username = returnUser.user.username;
+            input = input;
+            currentActivity = returnUser.user.current === null ? 0 : returnUser.user.current ;
+            isActive  = returnUser.user.isActive;
+        });
+    },
+    startNewActivity: function (id) {//start activity 0
+        //todo: Get start activity(ies) from activity table
+        //-Get 0 activity under first workflow from activity table
+        //todo: Create new session ID for this activity
+        //-get session id as it already started when user entered kikusername
+        //save session id in session table
+        //todo: Execute start activity(ies)
+        //-execute rand.js
+        //todo: return session id
+
+        DBFunctions.getActivityFromDb(id, function(datas) {//get 0 activity and next activities
+            var arr = []
+            if (datas !== null){
+                //execute plug in
+                var plugin = require('../plugins/' + datas.currentActivity.plugin);
+                plugin.returnFunc(this.username, datas.currentActivity.data.desc, false,
+                    datas.nextActivities.length > 0 ? datas.nextActivities[0].nextActivityId : -1,
+                    function (output) {
+                        for (var i = 0; i < datas.nextActivities.length; i++) {
+                            if (eval(datas.nextActivities[i].condition === output)) {
+                                arr.push(datas.nextActivities[i].nextActivityId)
+                            }
+                        }
+                        DBFunctions.updateUserDb(this.username, arr[0], function (user) {//update to next activity
+                            currentActivity = user.user.current;
+                            isActive        = user.user.isActive;
+                        });
+                    });
+            }
+        });
+    },
+    resumeWorkflow: function (sessionId) {
+        //todo: Get sesion ID from session table
+        //get session id
+        //todo: Look up activities in activityinstance table with null date complete
+        //
+        //todo: execute activities
+    },
+    executeActivity: function (sessionId, activityId) {
+        //todo: Insert a new row in activityInstance table with null date complete
+        //insert activity instance with current activity id
+        //todo: Load the plugin file if not already loaded
+        //get plugin file name and data from activity table
+        //todo: Execute plug in
+        //call plugin function with data
+        //todo: get the plug in
+        var plugin = plugins[pluginName];
+        var res = plugin["execute"](json, environment);
+        //todo: Check result, if we wait or continue
+        if (res == engine.workflowActivityResult.proceed)
+            ;//todo: Set the end date of the actvitiyinstance row
+        //update activitinstance table for this activity
+    },
+    getNextActivities: function (activityId, val) {
+        //todo: Load the nextActivity records with from: activityId
+        //get nextActivityid from nextActivity table where thisActivityId == activityId
+        //todo: evaluate the eval statements
+        //eval(condition == val)
+        //todo: if eval == true, add activity to list of returns
+        //add the activity to return array
+        getActivityFromDb(activityId,val,function(returnVals){
+            console.log(returnVals.nextActivities);
+        });
+    },
+    loadPlugin: function(pluginName) {
+        var path = "/scripts/plugins/" + pluginName + ".js";
+        var module = require(current);
+        modules.push(module);
+        done(modules);
+    },
+    workflowActivityResult: {
+        wait: 1,
+        proceed: 2
+    },
+    plugins: Array()
+};
+
+//engine.init('jasiekang1','g');
+//engine.startNewActivity(0);
+
 /*
 //get 0 activity
 var Activities = require('../model/Activity.js');
