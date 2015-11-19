@@ -1,20 +1,20 @@
-var dbFunc = require('./DBFunctions');
-var mongoose = require('mongoose');
-var db = mongoose.connect('mongodb://localhost/mybot');
+var userService = require('../services/userService');
+/*var mongoose = require('mongoose');
+var db = mongoose.connect('mongodb://localhost/mybot');*/
 
-var Engine = {}
+var Engine = {};
 
 Engine.execute = function(username,datas,isActive,input,cb) {
-    var arr = []
+    var arr = [];
     if (datas !== null){
 
         console.log('currentId:         ' + datas.currentActivity.id);
         console.log('plugin             ' + datas.currentActivity.plugin,' ' + isActive);
         if(datas.currentActivity.plugin == 'kikask.js' && isActive){
             for (var i = 0; i < datas.nextActivities.length; i++) {
-                if (datas.currentActivity.id > 0 && eval(datas.nextActivities[i].condition))
+                if (datas.currentActivity.id > 0 && eval(datas.nextActivities[i].condition));
                 {
-                    arr.push(datas.nextActivities[i].nextActivityId)
+                    arr.push(datas.nextActivities[i].nextActivityId);
                 }
             }
         }
@@ -35,15 +35,15 @@ Engine.execute = function(username,datas,isActive,input,cb) {
                      console.log('plugin output      ' + output);
                      console.log('Count:             ' + datas.nextActivities.length);*/
                     if (output === 'markActive') {
-                        console.log('marked active')
+                        console.log('marked active');
                     }
                     else {
                         for (var i = 0; i < datas.nextActivities.length; i++) {
                             if (datas.currentActivity.id === 0 && eval(datas.nextActivities[i].condition === output)) {
-                                arr.push(datas.nextActivities[i].nextActivityId)
+                                arr.push(datas.nextActivities[i].nextActivityId);
                             }
                             else if (datas.currentActivity.id > 0 && eval(datas.nextActivities[i].condition)) {
-                                arr.push(datas.nextActivities[i].nextActivityId)
+                                arr.push(datas.nextActivities[i].nextActivityId);
                             }
                         }
 
@@ -53,15 +53,15 @@ Engine.execute = function(username,datas,isActive,input,cb) {
         }
 
     }
-}
+};
 
 //third test
 Engine.doYourThing = function(username, input) {
     /*var username = 'cynthia';
     var answer = 'a';*/
     console.log('Engine username:' + username + ' input:' + input);
-    DBFunctions.getUserFromDb(username,function(returnUser){//get current activity for the user
-        console.log('getUser username:' +returnUser.user.username, 'currentId:' + returnUser.user.current );
+    userService.getUserFromDb(username, function(returnUser){//get current activity for the user
+        console.log('getUser username:' + returnUser.user.username, 'currentId:' + returnUser.user.current );
         var username = returnUser.user.username;
         var activity = returnUser.user.current === null ? 0 : returnUser.user.current ;
         var isActive = returnUser.user.isActive;
@@ -70,7 +70,7 @@ Engine.doYourThing = function(username, input) {
             return;
         }
 
-        DBFunctions.getActivityFromDb(activity, function(returnVals) {//get all nextactivity based on current
+        userService.getActivityFromDb(activity, function(returnVals) {//get all nextactivity based on current
 
             Engine.execute(username,returnVals,isActive,input,function(arr,output){//get matching nextactivity based on condition
                 if (arr.length <= 0) {
@@ -85,7 +85,7 @@ Engine.doYourThing = function(username, input) {
                         console.log('nextId:            ' + v);
                     });
                     console.log('update current activity');
-                    DBFunctions.updateUserDb(username, arr[0], function (user) { //update user.current activity
+                    userService.updateUserDb(username, arr[0], function (user) { //update user.current activity
                         console.log(username + ' current:' + user.user.current + ' val: ' + user.user.value);
                         Engine.doYourThing(username,'');
                     });
@@ -95,11 +95,11 @@ Engine.doYourThing = function(username, input) {
 
             });
 
-        })
-    })
-}
+        });
+    });
+};
 
-Engine.doYourThing('jasiekang1','g');
+//Engine.doYourThing('jasiekang1','g');
 
 module.exports = Engine;
 

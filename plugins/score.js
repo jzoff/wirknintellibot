@@ -44,7 +44,7 @@ score.returnFunc = function(username, desc, isActive, nextActivity, cb){
     if (cb) {
         cb();
     }
-}
+};
 
 
 

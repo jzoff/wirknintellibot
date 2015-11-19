@@ -19,7 +19,7 @@ rand.returnFunc = function(username, message, isActive,nextActivity, cb){
 
     console.log('rand :' + responses[0].body);
 
-    /*request.post({
+    request.post({
         url: 'https://engine.apikik.com/api/v1/message',
         json: {
             messages: responses
@@ -34,7 +34,7 @@ rand.returnFunc = function(username, message, isActive,nextActivity, cb){
         }
     });
 
-    request.post({
+     /*request.post({
         url: 'http://localhost:3000/receive',
         json: {
             messages: [{
@@ -50,7 +50,7 @@ rand.returnFunc = function(username, message, isActive,nextActivity, cb){
     if (cb) {
         cb('\'' + output + '\''); // params in here get passed back to engine
     }
-}
+};
 module.exports = rand;
 
 

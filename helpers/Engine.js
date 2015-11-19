@@ -41,7 +41,7 @@ var engine = {
                 //call plugin function with data
         //todo: get the plug in
         var plugin = plugins[pluginName];
-        var res = plugin["execute"](json, environment);
+        //var res = plugin["execute"](json, environment);
         //todo: Check result, if we wait or continue
         if (res == engine.workflowActivityResult.proceed)
             ;//todo: Set the end date of the actvitiyinstance row
@@ -99,7 +99,7 @@ var getActivityFromDb = function(activityId, input, cb) {
             mongoose.disconnect();
             //return res.send(200, currentActivity);
         });
-}
+};
 
 engine.getNextActivities(0,'cynthia');
 
@@ -111,7 +111,7 @@ var engine = {
 
     init: function(username,input){
         console.log('Engine username:' + username + ' input:' + input);
-        DBFunctions.getUserFromDb(username,function(returnUser){//get current activity for the user
+        userService.getUserFromDb(username,function(returnUser){//get current activity for the user
             username = returnUser.user.username;
             input = input;
             currentActivity = returnUser.user.current === null ? 0 : returnUser.user.current ;
@@ -128,8 +128,8 @@ var engine = {
         //-execute rand.js
         //todo: return session id
 
-        DBFunctions.getActivityFromDb(id, function(datas) {//get 0 activity and next activities
-            var arr = []
+        userService.getActivityFromDb(id, function(datas) {//get 0 activity and next activities
+            var arr = [];
             if (datas !== null){
                 //execute plug in
                 var plugin = require('../plugins/' + datas.currentActivity.plugin);
@@ -138,10 +138,10 @@ var engine = {
                     function (output) {
                         for (var i = 0; i < datas.nextActivities.length; i++) {
                             if (eval(datas.nextActivities[i].condition === output)) {
-                                arr.push(datas.nextActivities[i].nextActivityId)
+                                arr.push(datas.nextActivities[i].nextActivityId);
                             }
                         }
-                        DBFunctions.updateUserDb(this.username, arr[0], function (user) {//update to next activity
+                        userService.updateUserDb(this.username, arr[0], function (user) {//update to next activity
                             currentActivity = user.user.current;
                             isActive        = user.user.isActive;
                         });
@@ -165,7 +165,7 @@ var engine = {
         //call plugin function with data
         //todo: get the plug in
         var plugin = plugins[pluginName];
-        var res = plugin["execute"](json, environment);
+        //var res = plugin["execute"](json, environment);
         //todo: Check result, if we wait or continue
         if (res == engine.workflowActivityResult.proceed)
             ;//todo: Set the end date of the actvitiyinstance row

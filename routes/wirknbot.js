@@ -53,7 +53,7 @@ router.post('/', function (req, res) {
     for(var i = 0 ; i < messages.length ; i++){
         //responses = responses.concat(personalityQuiz.processMessage(messages[i]));
         console.log('wirknbot from:' + messages[i].from + ' body:' +messages[i].body );
-        engine.doYourThing(messages[i].from, messages[i].body)
+        engine.doYourThing(messages[i].from, messages[i].body);
     }
 
     if (responses.length > 0) {

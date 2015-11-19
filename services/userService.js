@@ -2,8 +2,11 @@ var Activity = require('../model/Activity.js');
 var NextActivity = require('../model/NextActivity.js');
 var User = require('../model/User.js');
 
-DBFunctions = {};
-DBFunctions.getActivityFromDb = function(id, cb) {
+var userRepo = require('../repositories/userRepo');
+
+userService = {};
+
+userService.getActivityFromDb = function(id, cb) {
     var query = Activity.findOne({id: id});
     query.exec(function (err, startActivity) {
         if (err) {
@@ -30,32 +33,31 @@ DBFunctions.getActivityFromDb = function(id, cb) {
             //return res.send(200, currentActivity);
         });
     });
-}
+};
 
-DBFunctions.getUserFromDb = function(username, cb) {
-    var query = User.findOne({username: username});
-    query.exec(function (err, user) {
+userService.getUserFromDb = function(username, cb) {
+    userRepo.getUserByUsername(username, function(err, user) {
+        var returnVals = {};
+
         if (err) {
-            console.log(err);//return res.send(400);
-        }
-        if(user === null) {
-            console.log('no user');
-            user = new User({
-                username: username,
-                current: null,
-                value: 0
+            userRepo.createUser(username, function(err, user) {
+                returnVals.user = user;
+                if (cb) {
+                    cb(returnVals);
+                }
+                return;
             });
-            user.save();
+        } else {
+            returnVals.user = user;
+            if (cb) {
+                cb(returnVals);
+            }
+            return;
         }
-        var returnVals = {
-            user: user
-        };
-        cb(returnVals);
-        //return res.send(200, currentActivity);
     });
-}
+};
 
-DBFunctions.updateUserDb = function(username, activity, cb) {
+userService.updateUserDb = function(username, activity, cb) {
     console.log('updateUserDb username:' + username + ' activity:' + activity);
     //A.findOneAndUpdate(conditions, update, options, callback) // executes
     var query = User.findOneAndUpdate({ username: username }, { current: activity }, {new: true});//, function (err, user) {
@@ -72,7 +74,7 @@ DBFunctions.updateUserDb = function(username, activity, cb) {
         cb(returnVals);
         //return res.send(200, currentActivity);
     });
-}
+};
 
-module.exports = DBFunctions;
+module.exports = userService;
 

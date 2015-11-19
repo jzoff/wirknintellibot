@@ -33,7 +33,7 @@ var getActivityFromDb = function(id, cb) {
             //return res.send(200, currentActivity);
         });
     });
-}
+};
 
 var getUserFromDb = function(username, cb) {
     var query = User.findOne({username: username});
@@ -55,7 +55,7 @@ var getUserFromDb = function(username, cb) {
             cb(returnVals);
             //return res.send(200, currentActivity);
         });
-}
+};
 var updateUserDb = function(username, activity, cb) {
     //console.log('in update',username, activity);
     //A.findOneAndUpdate(conditions, update, options, callback) // executes
@@ -74,14 +74,14 @@ var updateUserDb = function(username, activity, cb) {
         //mongoose.disconnect();
         //return res.send(200, currentActivity);
     });
-}
+};
 
 
-var Engine = {}
+var Engine = {};
 
 Engine.execute = function(username,datas,cb) {
     //console.log(datas);
-    var arr = []
+    var arr = [];
     if (datas !== null){
         console.log('currentId:         ' + datas.currentActivity.id);
         console.log('plugin             ' + datas.currentActivity.plugin);
@@ -95,7 +95,7 @@ Engine.execute = function(username,datas,cb) {
 
         for (var i = 0; i < datas.nextActivities.length; i++) {
             if (eval(datas.nextActivities[i].condition)) {
-                arr.push(datas.nextActivities[i].nextActivityId)
+                arr.push(datas.nextActivities[i].nextActivityId);
             }
         }
     }
@@ -104,7 +104,7 @@ Engine.execute = function(username,datas,cb) {
         console.log('nextId:            ' + v);
     });*/
     cb(arr);
-}
+};
 
 //third test
 var doYourThing = function() {
@@ -135,9 +135,9 @@ var doYourThing = function() {
 
             });
 
-        })
-    })
-}
+        });
+    });
+};
 doYourThing();
 
 //first test

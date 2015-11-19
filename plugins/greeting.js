@@ -9,7 +9,7 @@ greeting.returnFunc = function(username, message, isActive,nextActivity, cb){
     }];
 
     console.log('greeting :' + responses[0].body);
-    /*request.post({
+    request.post({
         url: 'https://engine.apikik.com/api/v1/message',
         json: {
             messages: responses
@@ -22,12 +22,12 @@ greeting.returnFunc = function(username, message, isActive,nextActivity, cb){
         if(resp.statusCode !== 200){
             console.log('API Error ' + resp.statusCode + ': ' + err);
         }
-    });*/
+    });
 
     if (cb) {
         cb();
     }
 
-}
+};
 module.exports = greeting;
 //who you going to talk to
