@@ -21,6 +21,17 @@ final.returnFunc = function(username, message,isActive,nextActivity, cb){
         var returnVals = {
             user: user
         };
+        var link = '';
+        if (user.value <= 7) {
+            link = 'http://google.com';
+        } else if (user.value > 7 && user.value <=12) {
+            link = 'http://bing.com';
+        } else if (user.value > 12 && user.value <= 17) {
+            link = 'http://yahoo.com';
+        } else {
+            link = 'http://nhl.com';
+        }
+        console.log('link' + link);
     });
     /*request.post({
         url: 'https://engine.apikik.com/api/v1/message',

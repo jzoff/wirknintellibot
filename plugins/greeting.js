@@ -1,7 +1,7 @@
 var request = require('request');
 var greeting = {};
 greeting.returnFunc = function(username, message, isActive,nextActivity, cb){
-    var greeting = 'I\'m going to help you find the right job. Text me when you are ready';
+    var greeting = 'I\'m going to help you find the right job. Let me ask you 5 quick questions';
     responses = [{
         type: 'text',
         to: username,
