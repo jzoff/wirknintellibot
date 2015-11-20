@@ -22,7 +22,7 @@ var activities = [
         plugin: 'greeting.js',
         data: {
             type: 'text',
-            desc: 'Hi. My name is Cynthia'
+            desc: 'I\'m going to help you find the right job. Let me ask you 5 quick questions'
         }
     }),
 
@@ -32,7 +32,7 @@ var activities = [
         plugin: 'greeting.js',
         data: {
             type: 'text',
-            desc: 'Hi. My name is Jon'
+            desc: 'I\'m going to help you find the right job. Let me ask you 5 quick questions'
         }
     }),
 
@@ -42,7 +42,7 @@ var activities = [
         plugin: 'greeting.js',
         data: {
             type: 'text',
-            desc: 'Hi. My name is Pedro'
+            desc: 'I\'m going to help you find the right job. Let me ask you 5 quick questions'
         }
     }),
 
@@ -75,7 +75,6 @@ var activities = [
             desc: 'I\'ve always wanted to be friends with:\n(a) Floyd Mayweather\n(b) Gordon Ramsey\n(c) Katy Perry\n(d) Kim Kardashian'
         }
     }),
-
 
     new Activity({
         id:  7,
@@ -216,6 +215,14 @@ var activities = [
         }
     }),
 
+    new Activity({
+        id:  65,
+        plugin: 'message.js',
+        data: {
+            type: 'text',
+            desc: 'Great work, only 3 questions to go!'
+        }
+    }),
 
     //7 a,b,c,d
     new Activity({
@@ -500,29 +507,34 @@ var nextActivities = [
 
     new NextActivity({
         thisActivityId:  6100,
-        nextActivityId: 7,
+        nextActivityId: 65,
         condition: true
     }),
 
 
     new NextActivity({
         thisActivityId:  6200,
-        nextActivityId: 7,
+        nextActivityId: 65,
         condition: true
     }),
 
     new NextActivity({
         thisActivityId:  6300,
-        nextActivityId: 7,
+        nextActivityId: 65,
         condition: true
     }),
 
     new NextActivity({
         thisActivityId:  6400,
-        nextActivityId: 7,
+        nextActivityId: 65,
         condition: true
     }),
 
+    new NextActivity({
+        thisActivityId:  65,
+        nextActivityId: 7,
+        condition: true
+    }),
 
     //Q7 abcd
     new NextActivity({
