@@ -728,7 +728,7 @@ nextActivities.forEach(function(nextActivity) {
     nextActivity.save();
 });
 
-//mongoose.disconnect();
+mongoose.disconnect();
 
 /**
  * workflow
