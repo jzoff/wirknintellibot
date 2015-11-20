@@ -3,7 +3,11 @@ var router = express.Router();
 var getRawBody = require('raw-body');
 var crypto = require('crypto');
 var httpClient = require('request');
+var onFinished = require('on-finished');
 var engine = require('../helpers/testengine2');
+
+var preRequest = require('../plugins/middleware/pre');
+var postRequest = require('../plugins/middleware/post');
 
 /*var BOT_USERNAME = process.env.BOT_USERNAME;
 var API_KEY = process.env.API_KEY;*/
@@ -38,6 +42,13 @@ router.use('/', function (req, res, next) {
             res.status(400).send('request entity was not valid JSON');
         }
     });
+});
+
+router.use('/', preRequest);
+
+router.use('/', function(req, res, next) {
+    onFinished(res, postRequest);
+    next();
 });
 
 /* GET home page. */
