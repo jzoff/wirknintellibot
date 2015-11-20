@@ -7,9 +7,11 @@ module.exports = function(req, res, next, messages) {
     var data = swearwords.split(',');
     var swearing = false;
     for (var i = 0; i < messages.length; i++) {
-        //console.log('\n\n', messages[i], '\n\n');
-        if (data.indexOf(messages[i].body) > -1) {
-            swearing = true;
+        var words = messages[i].body.split(' ');
+        for (var j = 0; j < words.length; j++) {
+            if (data.indexOf(words[j].toLowerCase()) > -1) {
+                swearing = true;
+            }
         }
     }
     if (swearing) {
