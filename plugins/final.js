@@ -12,13 +12,17 @@ module.exports = {
 
                 var link = '';
                 if (userSession.value <= 7) {
-                    link = 'http://google.com';
+                    //link = 'http://google.com';
+                    link = 'https://stagingapp.wirkn.com/en/kik?filter=Retail';
                 } else if (userSession.value > 7 && userSession.value <= 12) {
-                    link = 'http://bing.com';
+                    //link = 'http://bing.com';
+                    link = 'https://stagingapp.wirkn.com/en/kik?filter=Restaurant';
                 } else if (userSession.value > 12 && userSession.value <= 17) {
-                    link = 'http://yahoo.com';
+                    //link = 'http://yahoo.com';
+                    link ='https://stagingapp.wirkn.com/en/kik?filter=Event';
                 } else {
-                    link = 'http://nhl.com';
+                    //link = 'http://nhl.com';
+                    link ='https://stagingapp.wirkn.com/en/kik';
                 }
 
                 // Send message back to kik user
