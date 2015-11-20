@@ -17,4 +17,4 @@ var User = new Schema({
 module.exports = {
     User: mongoose.model('User',User),
     Session: mongoose.model('Session', Session)
-}
+};

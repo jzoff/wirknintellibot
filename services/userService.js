@@ -42,7 +42,7 @@ module.exports = {
                 // User can have multiple sessions with different workflow
                 cb(sessionArr[0]);
             } else {
-                createUserSession(user,function(userSession){
+                userRepo.createUserSession(user, function(userSession) {
                     cb(userSession);
                 });
             }

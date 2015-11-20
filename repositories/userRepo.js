@@ -88,7 +88,7 @@ module.exports = {
         user.save();
 
         if (cb) {
-            cb(null, session);
+            cb(session);
         }
     },
     updateUserSession: function(session, cb) {
