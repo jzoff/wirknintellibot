@@ -257,6 +257,23 @@ var activities = [
         }
     }),
 
+    new Activity({
+        id:  71,
+        plugin: 'message.js',
+        data: {
+            type: 'text',
+            desc: 'Interesting choice...Rotten Tomatoes would say otherwise'
+        }
+    }),
+
+    new Activity({
+        id:  72,
+        plugin: 'message.js',
+        data: {
+            type: 'text',
+            desc: 'You should probably stay away from Netflix'
+        }
+    }),
 
     //8 a,b,c,d
     new Activity({
@@ -565,25 +582,37 @@ var nextActivities = [
 
     new NextActivity({
         thisActivityId:  7100,
-        nextActivityId: 8,
+        nextActivityId: 71,
         condition: true
     }),
 
 
     new NextActivity({
         thisActivityId:  7200,
-        nextActivityId: 8,
+        nextActivityId: 71,
         condition: true
     }),
 
     new NextActivity({
         thisActivityId:  7300,
-        nextActivityId: 8,
+        nextActivityId: 71,
         condition: true
     }),
 
     new NextActivity({
         thisActivityId:  7400,
+        nextActivityId: 72,
+        condition: true
+    }),
+
+    new NextActivity({
+        thisActivityId:  71,
+        nextActivityId: 8,
+        condition: true
+    }),
+
+    new NextActivity({
+        thisActivityId:  72,
         nextActivityId: 8,
         condition: true
     }),
@@ -699,7 +728,7 @@ nextActivities.forEach(function(nextActivity) {
     nextActivity.save();
 });
 
-mongoose.disconnect();
+//mongoose.disconnect();
 
 /**
  * workflow
