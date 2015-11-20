@@ -3,7 +3,6 @@ var router = express.Router();
 var getRawBody = require('raw-body');
 var crypto = require('crypto');
 var httpClient = require('request');
-var onFinished = require('on-finished');
 var engine = require('../helpers/testengine2');
 
 var preRequest = require('../plugins/middleware/pre');
@@ -45,11 +44,7 @@ router.use('/', function (req, res, next) {
 });
 
 router.use('/', preRequest);
-
-router.use('/', function(req, res, next) {
-    onFinished(res, postRequest);
-    next();
-});
+router.use('/', postRequest);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

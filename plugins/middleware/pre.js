@@ -8,8 +8,9 @@ module.exports = function(req, res, next) {
         next();
     }
 
-    if(noswear(messages)) {
-        res.end(200);
+    if(noswear(req, res, next, messages)) {
+        res.status(200).send();
+        return;
     }
 
     next();
