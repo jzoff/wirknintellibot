@@ -1,4 +1,6 @@
-var User = require('../model/User');
+var User = require('../model/User').User;
+var Session = require('../model/User').Session;
+
 
 module.exports = {
 
@@ -76,7 +78,19 @@ module.exports = {
             cb(returnVals);
         });
     },
+    createUserSession: function(user, cb){
+        var session = new Session({
+            current: null,
+            value: 0,
+            dateCompleted: null
+        });
+        user.session.push(session);
+        user.save();
 
+        if (cb) {
+            cb(null, session);
+        }
+    },
     updateUserSession: function(session, cb) {
         User.update({'session._id': session._id}, {'$set': {
             'session.$.current': session.current,

@@ -26,10 +26,25 @@ module.exports = {
 
     getCurrentSessionByUsername: function(username, cb) {
         this.getOrCreateUserByUsername(username, function(user) {
+            //if user.session[i].datecompleted == null, return that session
+            //else user.session.push(new session)
+            // user.save
+            // return user
+            var sessionArr = [];
             for (var i = 0; i < user.session.length; i++) {
                 if (user.session[i].dateCompleted === null) {
-                    cb(user.session[i]);
+                    sessionArr.push(user.session[i]);
                 }
+            }
+
+            if (sessionArr.length) {
+                // Return first session, which might change later
+                // User can have multiple sessions with different workflow
+                cb(sessionArr[0]);
+            } else {
+                createUserSession(user,function(userSession){
+                    cb(userSession);
+                });
             }
         });
     },
