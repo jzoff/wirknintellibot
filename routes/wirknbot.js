@@ -56,16 +56,17 @@ router.post('/', function (req, res) {
 
     var responses = [];
     for(var i = 0 ; i < messages.length ; i++){
-        //responses = responses.concat(personalityQuiz.processMessage(messages[i]));
-        console.log('wirknbot from:' + messages[i].from + ' body:' +messages[i].body );
-        engine.doYourThing(messages[i].from, messages[i].body);
+
+        console.log('wirknbot from:' + messages[i].from + ' body:' + messages[i].body );
+
+        engine.doYourThing(messages[i].from, messages[i].body, function() {
+            res.status(200).end();
+        });
     }
 
     if (responses.length > 0) {
         console.log('Responding: ' + JSON.stringify(responses));
     }
-
-    res.status(200).end();
 });
 
 

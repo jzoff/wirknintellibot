@@ -2,7 +2,7 @@ var userService = require('../services/userService');
 var activityService = require('../services/activityService');
 
 var Engine = {
-    doYourThing: function (username, input) {
+    doYourThing: function (username, input, cb) {
         console.log('Engine username:' + username + ' input:' + input);
 
         //get current activity for the user
@@ -21,8 +21,14 @@ var Engine = {
                     if (nextActivityArr.length <= 0) {
                         console.log('done for:' + username);
                         console.log('\n\n\n');
+
+                        // TODO: fix this
                         if (output === 'inActive') {
-                            Engine.doYourThing(username, input);
+                            Engine.doYourThing(username, input, cb);
+                        } else {
+                            if (cb) {
+                                cb();
+                            }
                         }
                     }
                     else {
@@ -33,7 +39,7 @@ var Engine = {
 
                         userService.updateSessionCurrent(userSession, nextActivityArr[0], function (err, sess) {
                             console.log('current session: ' + sess.current);
-                            Engine.doYourThing(username, input);
+                            Engine.doYourThing(username, input, cb);
                         });
                     }
                     console.log('\n\n\n');
