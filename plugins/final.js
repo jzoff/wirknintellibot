@@ -46,12 +46,18 @@ module.exports = {
                                 to: username,
                                 url: link,
                                 title: 'Wirkn Jobs',
-                                text: 'Click to view jobs'
+                                text: 'Click to view jobs',
+                                picUrl: 'https://pbs.twimg.com/profile_images/512791756971077634/cRQH-6_x_normal.png',
+                                attribution: {
+                                    name: 'Wirkn Jobs',
+                                    iconUrl: 'https://pbs.twimg.com/profile_images/512791756971077634/cRQH-6_x_normal.png'
+                                }
                             },
                             {
                                 type: 'text',
                                 to: username,
-                                body: 'To try again, text me'
+                                body: 'Text me if you wish to try again',
+                                suggestedResponses: ['Restart']
                             }
                         ]
                     },
