@@ -47,6 +47,11 @@ module.exports = {
                                 url: link,
                                 title: 'Wirkn Jobs',
                                 text: 'Click to view jobs'
+                            },
+                            {
+                                type: 'text',
+                                to: username,
+                                body: 'To try again, text me'
                             }
                         ]
                     },
