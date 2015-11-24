@@ -22,7 +22,7 @@ var activities = [
         plugin: 'greeting.js',
         data: {
             type: 'text',
-            desc: 'I\'m going to help you find the right job. Let me ask you 5 quick questions'
+            desc: 'I\'m going to help you find the right job. Let me ask you 6 quick questions'
         }
     }),
 
@@ -32,7 +32,7 @@ var activities = [
         plugin: 'greeting.js',
         data: {
             type: 'text',
-            desc: 'I\'m going to help you find the right job. Let me ask you 5 quick questions'
+            desc: 'I\'m going to help you find the right job. Let me ask you 6 quick questions'
         }
     }),
 
@@ -42,7 +42,7 @@ var activities = [
         plugin: 'greeting.js',
         data: {
             type: 'text',
-            desc: 'I\'m going to help you find the right job. Let me ask you 5 quick questions'
+            desc: 'I\'m going to help you find the right job. Let me ask you 6 quick questions'
         }
     }),
 
@@ -647,26 +647,26 @@ var nextActivities = [
 
     new NextActivity({
         thisActivityId:  8100,
-        nextActivityId: 10,
+        nextActivityId: 9,
         condition: true
     }),
 
 
     new NextActivity({
         thisActivityId:  8200,
-        nextActivityId: 10,
+        nextActivityId: 9,
         condition: true
     }),
 
     new NextActivity({
         thisActivityId:  8300,
-        nextActivityId: 10,
+        nextActivityId: 9,
         condition: true
     }),
 
     new NextActivity({
         thisActivityId:  8400,
-        nextActivityId: 10,
+        nextActivityId: 9,
         condition: true
     }),
 
