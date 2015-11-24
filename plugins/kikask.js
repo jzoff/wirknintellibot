@@ -31,6 +31,24 @@ module.exports = {
             console.log('kikask :' + responses[0].body);
         } else {
             console.log('Pick from the options I gave you');
+            request.post({
+                url: 'https://engine.apikik.com/api/v1/message',
+                json: {
+                    messages: [{
+                        type: 'text',
+                        to: username,
+                        body: 'Pick from the options I gave you'
+                    }]
+                },
+                auth: {
+                    username: 'wirkn',//BOT_USERNAME,
+                    password: '80ed2950-8a5f-4643-bbac-b5fc63b90e4a'//API_KEY
+                }
+            }, function (err, resp, body) {
+                if (resp.statusCode !== 200) {
+                    console.log('API Error ' + resp.statusCode + ': ' + err);
+                }
+            });
         }
 
         userService.updateSessionIsActive(userSession, !userSession.isActive, function (err, sess) {
