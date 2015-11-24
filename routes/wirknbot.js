@@ -57,9 +57,9 @@ router.post('/', function (req, res) {
     var responses = [];
     for(var i = 0 ; i < messages.length ; i++){
 
-        console.log('wirknbot from:' + messages[i].from + ' body:' + messages[i].body );
+        console.log('wirknbot from:' + messages[i].from.toLowerCase() + ' body:' + messages[i].body.toLowerCase() );
 
-        engine.doYourThing(messages[i].from, messages[i].body, function() {
+        engine.doYourThing(messages[i].from.toLowerCase(), messages[i].body.toLowerCase(), function() {
             res.status(200).end();
         });
     }
