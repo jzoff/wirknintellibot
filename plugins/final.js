@@ -45,12 +45,12 @@ module.exports = {
                                 type: 'link',
                                 to: username,
                                 url: link,
-                                title: 'Wirkn Jobs',
-                                text: 'Click to view jobs',
-                                picUrl: 'https://pbs.twimg.com/profile_images/512791756971077634/cRQH-6_x_normal.png',
+                                //title: 'Wirkn Jobs',
+                               // text: 'Click to view jobs',
+                                picUrl: 'https://wirknintellibot.herokuapp.com/images/wirkn-jobs.png',
                                 attribution: {
-                                    name: 'Wirkn Jobs',
-                                    iconUrl: 'https://pbs.twimg.com/profile_images/512791756971077634/cRQH-6_x_normal.png'
+                                    name: 'Click to view jobs',
+                                    iconUrl: 'https://wirknintellibot.herokuapp.com/images/wirkn-jobs.png'
                                 }
                             },
                             {
