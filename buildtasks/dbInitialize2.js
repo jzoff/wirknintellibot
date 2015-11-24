@@ -647,26 +647,26 @@ var nextActivities = [
 
     new NextActivity({
         thisActivityId:  8100,
-        nextActivityId: 9,
+        nextActivityId: 10,
         condition: true
     }),
 
 
     new NextActivity({
         thisActivityId:  8200,
-        nextActivityId: 9,
+        nextActivityId: 10,
         condition: true
     }),
 
     new NextActivity({
         thisActivityId:  8300,
-        nextActivityId: 9,
+        nextActivityId: 10,
         condition: true
     }),
 
     new NextActivity({
         thisActivityId:  8400,
-        nextActivityId: 9,
+        nextActivityId: 10,
         condition: true
     }),
 
