@@ -52,7 +52,7 @@ var activities = [
         plugin: 'kikask.js',
         data: {
             type: 'text',
-            desc: 'First question, When you meet up with friends, you like to\n(a) Go Shopping\n(b) Eat, drink, be merry\n(c) Go to a concert\n(d) Do whatever they want'
+            desc: 'When you meet up with friends, you like to:\n Go to the Mall\n Hang Out\n Go to Concerts\n Something fun'
         }
     }),
 
@@ -62,7 +62,7 @@ var activities = [
         plugin: 'kikask.js',
         data: {
             type: 'text',
-            desc: 'Describe yourself in one word\n(a) Fashionable\n(b) Charming\n(c) Adventurous\n(d) Adaptable'
+            desc: 'Describe yourself in one word:\n Fashionable\n Charming\n Adventurous\n Adaptable'
         }
     }),
 
@@ -72,7 +72,7 @@ var activities = [
         plugin: 'kikask.js',
         data: {
             type: 'text',
-            desc: 'I\'ve always wanted to be friends with:\n(a) Floyd Mayweather\n(b) Gordon Ramsey\n(c) Katy Perry\n(d) Kim Kardashian'
+            desc: 'I\'ve always wanted to be friends with:\n Floyd Mayweather\n Gordon Ramsey\n Katy Perry\n Kim Kardashian'
         }
     }),
 
@@ -81,7 +81,7 @@ var activities = [
         plugin: 'kikask.js',
         data: {
             type: 'text',
-            desc: 'You\'re going to see a movie, which one do you pick:\n(a) The Devil Wears Prada\n(b) The Wolf of Wall Street\n(c) Depicable Me\n(d) I can\'t decide'
+            desc: 'You\'re going to see a movie, which one do you pick:\n Devil Wears Prada\n Wolf of Wall Street\n Depicable Me\n I don\'t know'
         }
     }),
 
@@ -91,7 +91,7 @@ var activities = [
         plugin: 'kikask.js',
         data: {
             type: 'text',
-            desc: 'If you found $100, where would you spend it?\n(a) H&M\n(b) Chipotle Mexican Grill\n(c) Disneyland\n(d) Somewhere at the mall'
+            desc: 'If you found $100, where would you spend it?\n Go Shopping\n Chipotle\n Disneyland\n Food Court'
         }
     }),
 
@@ -101,7 +101,7 @@ var activities = [
         plugin: 'kikask.js',
         data: {
             type: 'text',
-            desc: 'Your biggest frustration is\n(a) Credit card bills\n(b) Slow service\n(c) Waiting in line\n(d) Hashtags'
+            desc: 'Your biggest frustration is:\n Bills\n Slow service\n Waiting\n Hashtags'
         }
     }),
 
@@ -181,6 +181,15 @@ var activities = [
         }
     }),
 
+
+    new Activity({
+        id:  55,
+        plugin: 'message.js',
+        data: {
+            type: 'text',
+            desc: 'You sound awesome!'
+        }
+    }),
 
     //6 a,b,c,d
     new Activity({
@@ -393,26 +402,26 @@ var nextActivities = [
     new NextActivity({
         thisActivityId:  4,
         nextActivityId: 4100,
-        condition: "input=='a'"
+        condition: "input=='Mall'"
     }),
 
 
     new NextActivity({
         thisActivityId:  4,
         nextActivityId: 4200,
-        condition: "input=='b'"
+        condition: "input=='Hang out'"
     }),
 
     new NextActivity({
         thisActivityId:  4,
         nextActivityId: 4300,
-        condition: "input=='c'"
+        condition: "input=='Concerts'"
     }),
 
     new NextActivity({
         thisActivityId:  4,
         nextActivityId: 4400,
-        condition: "input=='d'"
+        condition: "input=='Something Fun'"
     }),
 
 
@@ -446,79 +455,84 @@ var nextActivities = [
     new NextActivity({
         thisActivityId:  5,
         nextActivityId: 5100,
-        condition: "input=='a'"
+        condition: "input=='Fashionable'"
     }),
 
 
     new NextActivity({
         thisActivityId:  5,
         nextActivityId: 5200,
-        condition: "input=='b'"
+        condition: "input=='Charming'"
     }),
 
     new NextActivity({
         thisActivityId:  5,
         nextActivityId: 5300,
-        condition: "input=='c'"
+        condition: "input=='Adventurous'"
     }),
 
     new NextActivity({
         thisActivityId:  5,
         nextActivityId: 5400,
-        condition: "input=='d'"
+        condition: "input=='Adaptable'"
     }),
 
 
     new NextActivity({
         thisActivityId:  5100,
-        nextActivityId: 6,
+        nextActivityId: 55,
         condition: true
     }),
 
 
     new NextActivity({
         thisActivityId:  5200,
-        nextActivityId: 6,
+        nextActivityId: 55,
         condition: true
     }),
 
     new NextActivity({
         thisActivityId:  5300,
-        nextActivityId: 6,
+        nextActivityId: 55,
         condition: true
     }),
 
     new NextActivity({
         thisActivityId:  5400,
-        nextActivityId: 6,
+        nextActivityId: 55,
         condition: true
     }),
 
+    new NextActivity({
+        thisActivityId:  55,
+        nextActivityId: 6,
+        condition: true
+    }),
 
     //Q6 abcd
     new NextActivity({
         thisActivityId:  6,
         nextActivityId: 6100,
-        condition: "input=='a'"
+        condition: "input=='Floyd'"
     }),
 
 
     new NextActivity({
         thisActivityId:  6,
         nextActivityId: 6200,
-        condition: "input=='b'"
+        condition: "input=='Gordon'"
     }),
 
     new NextActivity({
         thisActivityId:  6,
         nextActivityId: 6300,
-        condition: "input=='c'"
+        condition: "input=='Katy'"
     }),
 
     new NextActivity({
         thisActivityId:  6,
         nextActivityId: 6400,
-        condition: "input=='d'"
+        condition: "input=='Kim'"
     }),
 
 
@@ -557,26 +571,26 @@ var nextActivities = [
     new NextActivity({
         thisActivityId:  7,
         nextActivityId: 7100,
-        condition: "input=='a'"
+        condition: "input=='Devil Wears Prada'"
     }),
 
 
     new NextActivity({
         thisActivityId:  7,
         nextActivityId: 7200,
-        condition: "input=='b'"
+        condition: "input=='Wolf of Wall Street'"
     }),
 
     new NextActivity({
         thisActivityId:  7,
         nextActivityId: 7300,
-        condition: "input=='c'"
+        condition: "input=='Depicable Me'"
     }),
 
     new NextActivity({
         thisActivityId:  7,
         nextActivityId: 7400,
-        condition: "input=='d'"
+        condition: "input=='I do not know'"
     }),
 
 
@@ -622,26 +636,26 @@ var nextActivities = [
     new NextActivity({
         thisActivityId:  8,
         nextActivityId: 8100,
-        condition: "input=='a'"
+        condition: "input=='Shopping'"
     }),
 
 
     new NextActivity({
         thisActivityId:  8,
         nextActivityId: 8200,
-        condition: "input=='b'"
+        condition: "input=='Chipotle'"
     }),
 
     new NextActivity({
         thisActivityId:  8,
         nextActivityId: 8300,
-        condition: "input=='c'"
+        condition: "input=='Disneyland'"
     }),
 
     new NextActivity({
         thisActivityId:  8,
         nextActivityId: 8400,
-        condition: "input=='d'"
+        condition: "input=='Food Court'"
     }),
 
 
@@ -675,26 +689,26 @@ var nextActivities = [
     new NextActivity({
         thisActivityId:  9,
         nextActivityId: 9100,
-        condition: "input=='a'"
+        condition: "input=='Bills'"
     }),
 
 
     new NextActivity({
         thisActivityId:  9,
         nextActivityId: 9200,
-        condition: "input=='b'"
+        condition: "input=='Slow service'"
     }),
 
     new NextActivity({
         thisActivityId:  9,
         nextActivityId: 9300,
-        condition: "input=='c'"
+        condition: "input=='Waiting'"
     }),
 
     new NextActivity({
         thisActivityId:  9,
         nextActivityId: 9400,
-        condition: "input=='d'"
+        condition: "input=='Hashtags'"
     }),
 
 

@@ -2,7 +2,7 @@ var request = require('request');
 var logService = require('../services/logService');
 
 module.exports = {
-    returnFunc: function (username, message, userSession, nextActivity, cb) {
+    returnFunc: function (username, message, userSession, nextActivity, activities, cb){
         var index = getRandomInt(0, 2);
         var possibilities = ['cynthia', 'jon', 'pedro'];
         var pickRandomName = possibilities[index];

@@ -4,7 +4,7 @@ var userService = require('../services/userService');
 var logService = require('../services/logService');
 
 module.exports = {
-    returnFunc: function(username, message, userSession, nextActivity, cb){
+    returnFunc: function(username, message, userSession, nextActivity, activities, cb){
 
         userService.updateSessionDateCompleted(userSession, function (err, sess) {
             if (err) {

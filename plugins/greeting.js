@@ -2,7 +2,7 @@ var request = require('request');
 var logService = require('../services/logService');
 
 module.exports = {
-    returnFunc: function (username, message, userSession, nextActivity, cb) {
+    returnFunc: function (username, message, userSession, nextActivity, activities, cb){
         var greeting = 'I\'m going to help you find the right job. Let me ask you 5 quick questions';
         responses = [{
             type: 'text',

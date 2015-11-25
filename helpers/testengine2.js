@@ -58,7 +58,7 @@ function execute(username, activities, userSession, input, cb) {
 
         if (activities.currentActivity.plugin == 'kikask.js' && userSession.isActive) {
             for (var i = 0; i < activities.nextActivities.length; i++) {
-                if (activities.currentActivity.id > 0 && eval(activities.nextActivities[i].condition)) {
+                if (activities.currentActivity.id > 0 && eval(activities.nextActivities[i].condition.toLowerCase())) {
                     nextActivityArr.push(activities.nextActivities[i].nextActivityId);
                 }
             }
@@ -74,8 +74,8 @@ function execute(username, activities, userSession, input, cb) {
 
             var currentActivityDesc = activities.currentActivity.data.desc;
             var nextActivityId = activities.nextActivities.length > 0 ? activities.nextActivities[0].nextActivityId : -1;
-
-            plugin.returnFunc(username, currentActivityDesc, userSession, nextActivityId, function (output) {
+            //todo: activities can eliminate other parameter to returnFunc
+            plugin.returnFunc(username, currentActivityDesc, userSession, nextActivityId, activities,function (output) {
                 // The output of the plugin is available to be used
 
                 if (!(output === 'markActive')) {
@@ -83,7 +83,7 @@ function execute(username, activities, userSession, input, cb) {
                         if (activities.currentActivity.id === 0 && eval(activities.nextActivities[i].condition === output)) {
                             nextActivityArr.push(activities.nextActivities[i].nextActivityId);
                         }
-                        else if (activities.currentActivity.id > 0 && eval(activities.nextActivities[i].condition)) {
+                        else if (activities.currentActivity.id > 0 && eval(activities.nextActivities[i].condition.toLowerCase())) {
                             nextActivityArr.push(activities.nextActivities[i].nextActivityId);
                         }
                     }

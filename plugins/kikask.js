@@ -4,17 +4,30 @@ var userService = require('../services/userService');
 var logService = require('../services/logService');
 
 module.exports = {
-    returnFunc: function (username, desc, userSession, nextActivity, cb) {
+    returnFunc: function (username, desc, userSession, nextActivity, activities, cb) {
         var responses = [];
         if (!userSession.isActive) {
-            var choices = ['a', 'b', 'c', 'd'];
+
+            //var choices = ['a', 'b', 'c', 'd'];
+            var choices = [];
+            for (var i = 0; i < activities.nextActivities.length; i++) {
+                //condition is "input=='Adventurous'"
+                //grab Adventurous for response
+                var t = activities.nextActivities[i].condition.substr(7);//'Adventurous'
+                var s = t.substr(1, t.length-2);//Adventurous
+                choices.push(s);
+            }
+
             responses = toMessageArray(username, desc);
 
-            // Adding suggested responses
-            responses[responses.length - 1].suggestedResponses = [];
-            for (var i = 0; i < choices.length; i++) {
-                responses[responses.length - 1].suggestedResponses.push(choices[i]);
+            if(choices){
+                // Adding suggested responses
+                responses[responses.length - 1].suggestedResponses = [];
+                for (var i = 0; i < choices.length; i++) {
+                    responses[responses.length - 1].suggestedResponses.push(choices[i]);
+                }
             }
+
 
             request.post({
                 url: 'https://engine.apikik.com/api/v1/message',
