@@ -4,6 +4,7 @@ var getRawBody = require('raw-body');
 var crypto = require('crypto');
 var httpClient = require('request');
 var engine = require('../helpers/testengine2');
+var logService = require('../services/logService');
 
 var preRequest = require('../plugins/middleware/pre');
 var postRequest = require('../plugins/middleware/post');
@@ -58,6 +59,8 @@ router.post('/', function (req, res) {
     for(var i = 0 ; i < messages.length ; i++){
 
         console.log('wirknbot from:' + messages[i].from.toLowerCase() + ' body:' + messages[i].body.toLowerCase() );
+
+        logService.createLog(messages[i]);
 
         engine.doYourThing(messages[i].from.toLowerCase(), messages[i].body.toLowerCase(), function() {
             res.status(200).end();

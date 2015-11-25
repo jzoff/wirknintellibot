@@ -1,4 +1,5 @@
 var request = require('request');
+var logService = require('../services/logService');
 
 module.exports = {
     returnFunc: function (username, message, userSession, nextActivity, cb) {
@@ -31,6 +32,7 @@ module.exports = {
                 console.log('API Error ' + resp.statusCode + ': ' + err);
             }
         });
+        logService.createLog(responses[0]);
 
         var output = pickRandomName;
 
