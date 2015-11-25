@@ -7,7 +7,8 @@ module.exports = {
         var possibilities = ['cynthia', 'jon', 'pedro'];
         var pickRandomName = possibilities[index];
 
-        var greeting = 'Hi. I am ' + pickRandomName;
+        //var greeting = 'Hi. I am ' + pickRandomName;
+        var greeting = 'Hi there, I\'am the Wirkn Job Concierge'
         var responses = [
             {
                 type: 'text',

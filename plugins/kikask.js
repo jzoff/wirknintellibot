@@ -38,7 +38,7 @@ module.exports = {
                 {
                     type: 'text',
                     to: username,
-                    body: 'Pick from the options I gave you'
+                    body: 'Please enter one of the provided answers'
                 }
             );
             request.post({
