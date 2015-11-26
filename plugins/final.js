@@ -14,16 +14,16 @@ module.exports = {
                 var link = '';
                 var finalMsg = '';
                 if (userSession.value <= 7) {
-                    link = 'http://stagingapp.wirkn.com/en/kik?filter=Retail';
+                    link = 'http://app.wirkn.com/en/kik?filter=Retail&kik_username=' + username;//'http://stagingapp.wirkn.com/en/kik?filter=Retail';
                     finalMsg = 'You look twice in the mirror before you head out because standing out is your form of expression. Shopping to you is a serious sport; you take those sales seriously. You love to help people, and you\'re not afraid to voice your opinions. Retail jobs are perfect for you - not only because of the employee discount you get to enjoy, but it\'s a job where your individuality is appreciated.';
                 } else if (userSession.value > 7 && userSession.value <= 12) {
-                    link = 'http://stagingapp.wirkn.com/en/kik?filter=Restaurant';
+                    link = 'http://app.wirkn.com/en/kik?filter=Restaurant&kik_username=' + username;//'http://stagingapp.wirkn.com/en/kik?filter=Restaurant';
                     finalMsg = 'You\'re charming, witty, and some may even it call charisma. A true extravert energized by people, talking to strangers is a hobby of yours. A perfect combination for someone working in front-of-house restaurant jobs where your simple smile will earn you tips. And oh, it doesn\'t hurt that you\'re a foodie at heart.';
                 } else if (userSession.value > 12 && userSession.value <= 17) {
-                    link ='http://stagingapp.wirkn.com/en/kik?filter=Event';
+                    link ='http://app.wirkn.com/en/kik?filter=Event&kik_username=' + username;//'http://stagingapp.wirkn.com/en/kik?filter=Event';
                     finalMsg = 'You have so much energy in you that you just have it let it out. You are easily distracted by all the cool things going on in the world. You care about what\'s in front of you so you know how to make the best out of everyday. Event based jobs are perfect for you - not only do you get to interact with people in different settings, you get to focus on what\'s in front of you.';
                 } else {
-                    link ='http://stagingapp.wirkn.com/en/kik';
+                    link ='http://app.wirkn.com/en/kik?kik_username=' + username;//'http://stagingapp.wirkn.com/en/kik';
                     finalMsg = 'You love everything. What\'s not to like? Why do you have to make a choice when you can just do everything? Some people call it indecisive, but you call it optimism. We\'ll show you a list of all our jobs and you can decide on what\'s best for you?';
                 }
 
