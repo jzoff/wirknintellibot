@@ -119,7 +119,7 @@ var activities = [
         id:  4100,//a
         plugin: 'score.js',
         data: {
-           type: 'text',         desc:'1'
+            type: 'text',         desc:'1'
         }
     }),
 
@@ -753,14 +753,12 @@ mongoose.disconnect();
 /*
  workflow instance
  id  workflowid workparentId
-
  user
  date
  1
  null
  workflowinstance added
  return workflowinstance id -instance started for workflow 1
-
  get workflowInstance which 1
  if (no active activity)
  {
@@ -782,4 +780,3 @@ mongoose.disconnect();
  5       6
  6       7
  7       8*/
-

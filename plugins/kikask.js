@@ -2,6 +2,7 @@
 var request = require('request');
 var userService = require('../services/userService');
 var logService = require('../services/logService');
+var messagearray = require('./messagearray');
 
 module.exports = {
     returnFunc: function (username, desc, userSession, nextActivity, activities, cb) {
@@ -18,7 +19,7 @@ module.exports = {
                 choices.push(s);
             }
 
-            responses = toMessageArray(username, desc);
+            responses = messagearray.toMessageArray(username, desc);
 
             if(choices){
                 // Adding suggested responses
@@ -27,8 +28,6 @@ module.exports = {
                     responses[responses.length - 1].suggestedResponses.push(choices[i]);
                 }
             }
-
-
             request.post({
                 url: 'https://engine.apikik.com/api/v1/message',
                 json: {
@@ -82,24 +81,4 @@ module.exports = {
     }
 };
 
-function toMessageArray(username, o) {
-    if (typeof o === 'string') {
-        o = [o];
-    }
-    var res = [],
-        m, t;
-    for (var i = 0; i < o.length; i++) {
-        if (typeof o[i] === 'string') {
-            m = {
-                type: 'text',
-                to: username,
-                body: o[i]
-            };
-        } else {
-            m = JSON.parse(JSON.stringify(o[i]));
-            m.to = username;
-        }
-        res.push(m);
-    }
-    return res;
-}
+
