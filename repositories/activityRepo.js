@@ -10,7 +10,7 @@ module.exports = {
                 console.log(err);
             }
 
-            var query = NextActivity.find({thisActivityId : id});
+            var query = NextActivity.find({thisActivityId : id}).sort({nextActivityId: 1});
             query.exec(function (err, nextActivities) {
                 if (err) {
                     console.log(err);//return res.send(400);
