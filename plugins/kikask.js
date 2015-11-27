@@ -19,8 +19,29 @@ module.exports = {
                 choices.push(s);
             }
 
-            responses = messagearray.toMessageArray(username, desc);
+            console.log(activities.currentActivity.data);
 
+            responses = toMessageArray(username, activities.currentActivity.data.desc);
+            var picLink = 'https://wirknintellibot.herokuapp.com/images/q1.png';
+            if (activities.currentActivity.id === 4) {
+                picLink = 'https://wirknintellibot.herokuapp.com/images/q1.png';
+            } else if (activities.currentActivity.id === 5){
+                picLink = 'https://wirknintellibot.herokuapp.com/images/q2.png';
+            } else if (activities.currentActivity.id === 6){
+                picLink = 'https://wirknintellibot.herokuapp.com/images/q3.png';
+            } else if (activities.currentActivity.id === 7) {
+                picLink = 'https://wirknintellibot.herokuapp.com/images/q4.png';
+            } else if (activities.currentActivity.id === 8){
+                picLink = 'https://wirknintellibot.herokuapp.com/images/q5.png';
+            } else {
+                picLink = 'https://wirknintellibot.herokuapp.com/images/q6.png';
+            }
+            var picMsg = {
+                type:   'picture',
+                to:     username,
+                picUrl: picLink //activities.currentActivity.data.picUrl
+            };
+            responses.push(picMsg);
             if(choices){
                 // Adding suggested responses
                 responses[responses.length - 1].suggestedResponses = [];
@@ -28,6 +49,7 @@ module.exports = {
                     responses[responses.length - 1].suggestedResponses.push(choices[i]);
                 }
             }
+
             request.post({
                 url: 'https://engine.apikik.com/api/v1/message',
                 json: {
@@ -80,5 +102,28 @@ module.exports = {
         });
     }
 };
+
+function toMessageArray(username, o) {
+    if (typeof o === 'string') {
+        o = [o];
+    }
+    var res = [],
+        m, t;
+    for (var i = 0; i < o.length; i++) {
+        if (typeof o[i] === 'string') {
+            m = {
+                type: 'text',
+                to: username,
+                body: o[i]
+            };
+        } else {
+            m = JSON.parse(JSON.stringify(o[i]));
+            m.to = username;
+        }
+        res.push(m);
+    }
+    return res;
+}
+
 
 

@@ -2,8 +2,8 @@ var Activity = require('../model/Activity.js');
 var NextActivity = require('../model/NextActivity.js');
 var config = require('../config/db');
 var mongoose = require('mongoose');
-mongoose.connect(config.connectionString);
-//mongoose.connect('mongodb://localhost/mybot');
+//mongoose.connect(config.connectionString);
+mongoose.connect('mongodb://localhost/mybot');
 
 var activities = [
 
@@ -52,7 +52,8 @@ var activities = [
         plugin: 'kikask.js',
         data: {
             type: 'text',
-            desc: 'When you meet up with friends, you like to:\n Go to the Mall\n Hang Out\n Go to Concerts\n Something fun'
+            desc: 'When you meet up with friends, you like to:\n Go to the Mall\n Hang Out\n Go to Concerts\n Something fun',
+            picUrl: 'https://wirknintellibot.herokuapp.com/images/q1.png'
         }
     }),
 
@@ -62,7 +63,8 @@ var activities = [
         plugin: 'kikask.js',
         data: {
             type: 'text',
-            desc: 'Describe yourself in one word:\n Fashionable\n Charming\n Adventurous\n Adaptable'
+            desc: 'Describe yourself in one word:\n Fashionable\n Charming\n Adventurous\n Adaptable',
+            picUrl: 'https://wirknintellibot.herokuapp.com/images/q2.png'
         }
     }),
 
@@ -72,7 +74,8 @@ var activities = [
         plugin: 'kikask.js',
         data: {
             type: 'text',
-            desc: 'I\'ve always wanted to be friends with:\n Floyd Mayweather\n Gordon Ramsey\n Katy Perry\n Kim Kardashian'
+            desc: 'I\'ve always wanted to be friends with:\n Floyd Mayweather\n Gordon Ramsey\n Katy Perry\n Kim Kardashian',
+            picUrl: 'https://wirknintellibot.herokuapp.com/images/q3.png'
         }
     }),
 
@@ -81,7 +84,8 @@ var activities = [
         plugin: 'kikask.js',
         data: {
             type: 'text',
-            desc: 'You\'re going to see a movie, which one do you pick:\n Devil Wears Prada\n Wolf of Wall Street\n Depicable Me\n I don\'t know'
+            desc: 'You\'re going to see a movie, which one do you pick:\n Devil Wears Prada\n Wolf of Wall Street\n Depicable Me\n I don\'t know',
+            picUrl: 'https://wirknintellibot.herokuapp.com/images/q4.png'
         }
     }),
 
@@ -91,7 +95,8 @@ var activities = [
         plugin: 'kikask.js',
         data: {
             type: 'text',
-            desc: 'If you found $100, where would you spend it?\n Go Shopping\n Chipotle\n Disneyland\n Food Court'
+            desc: 'If you found $100, where would you spend it?\n Go Shopping\n Chipotle\n Disneyland\n Food Court',
+            picUrl: 'https://wirknintellibot.herokuapp.com/images/q5.png'
         }
     }),
 
@@ -101,7 +106,8 @@ var activities = [
         plugin: 'kikask.js',
         data: {
             type: 'text',
-            desc: 'Your biggest frustration is:\n Bills\n Slow service\n Waiting\n Hashtags'
+            desc: 'Your biggest frustration is:\n Bills\n Slow service\n Waiting\n Hashtags',
+            picUrl: 'https://wirknintellibot.herokuapp.com/images/q6.png'
         }
     }),
 
@@ -742,7 +748,7 @@ nextActivities.forEach(function(nextActivity) {
     nextActivity.save();
 });
 
-mongoose.disconnect();
+//mongoose.disconnect();
 
 /**
  * workflow
