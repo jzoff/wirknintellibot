@@ -2,8 +2,8 @@ var Activity = require('../model/Activity.js');
 var NextActivity = require('../model/NextActivity.js');
 var config = require('../config/db');
 var mongoose = require('mongoose');
-//mongoose.connect(config.connectionString);
-mongoose.connect('mongodb://localhost/mybot');
+mongoose.connect(config.connectionString);
+//mongoose.connect('mongodb://localhost/mybot');
 
 var activities = [
 
@@ -153,6 +153,15 @@ var activities = [
         }
     }),
 
+    new Activity({
+        id:  4500,//wrong
+        plugin: 'wronganswer.js',
+        data: {
+            type: 'text',
+            desc: 'Please enter one of the provided answers'
+        }
+    }),
+
 
     //Q5 a,b,c,d
     new Activity({
@@ -187,6 +196,14 @@ var activities = [
         }
     }),
 
+    new Activity({
+        id:  5500,//wrong
+        plugin: 'wronganswer.js',
+        data: {
+            type: 'text',
+            desc: 'Please enter one of the provided answers'
+        }
+    }),
 
     new Activity({
         id:  55,
@@ -231,6 +248,15 @@ var activities = [
     }),
 
     new Activity({
+        id:  6500,//wrong
+        plugin: 'wronganswer.js',
+        data: {
+            type: 'text',
+            desc: 'Please enter one of the provided answers'
+        }
+    }),
+
+    new Activity({
         id:  65,
         plugin: 'message.js',
         data: {
@@ -269,6 +295,15 @@ var activities = [
         plugin: 'score.js',
         data: {
             type: 'text',         desc:'4'
+        }
+    }),
+
+    new Activity({
+        id:  7500,//wrong
+        plugin: 'wronganswer.js',
+        data: {
+            type: 'text',
+            desc: 'Please enter one of the provided answers'
         }
     }),
 
@@ -323,6 +358,14 @@ var activities = [
         }
     }),
 
+    new Activity({
+        id:  8500,//wrong
+        plugin: 'wronganswer.js',
+        data: {
+            type: 'text',
+            desc: 'Please enter one of the provided answers'
+        }
+    }),
 
     //9 a,b,c,d
     new Activity({
@@ -354,6 +397,15 @@ var activities = [
         plugin: 'score.js',
         data: {
             type: 'text',         desc:'4'
+        }
+    }),
+
+    new Activity({
+        id:  9500,//wrong
+        plugin: 'wronganswer.js',
+        data: {
+            type: 'text',
+            desc: 'Please enter one of the provided answers'
         }
     })
 ];
@@ -430,6 +482,11 @@ var nextActivities = [
         condition: "input=='Something Fun'"
     }),
 
+    new NextActivity({
+        thisActivityId:  4,
+        nextActivityId: 4500,
+        condition: "input !=='Mall' && input !=='Hang out' && input !=='Concerts' && input !=='Something Fun'"
+    }),
 
     new NextActivity({
         thisActivityId:  4100,
@@ -453,6 +510,12 @@ var nextActivities = [
     new NextActivity({
         thisActivityId: 4400,
         nextActivityId: 5,
+        condition: true
+    }),
+
+    new NextActivity({
+        thisActivityId: 4500,
+        nextActivityId: 4,
         condition: true
     }),
 
@@ -483,6 +546,12 @@ var nextActivities = [
         condition: "input=='Adaptable'"
     }),
 
+    new NextActivity({
+        thisActivityId:  5,
+        nextActivityId: 5500,
+        condition: "input !=='Fashionable' && input !=='Charming' && input !=='Adventurous' && input !=='Adaptable'"
+    }),
+
 
     new NextActivity({
         thisActivityId:  5100,
@@ -506,6 +575,12 @@ var nextActivities = [
     new NextActivity({
         thisActivityId:  5400,
         nextActivityId: 55,
+        condition: true
+    }),
+
+    new NextActivity({
+        thisActivityId: 5500,
+        nextActivityId: 5,
         condition: true
     }),
 
@@ -541,6 +616,11 @@ var nextActivities = [
         condition: "input=='Kim'"
     }),
 
+    new NextActivity({
+        thisActivityId:  6,
+        nextActivityId: 6500,
+        condition: "input !=='Floyd' && input !=='Gordon' && input !=='Katy' && input !=='Kim'"
+    }),
 
     new NextActivity({
         thisActivityId:  6100,
@@ -564,6 +644,12 @@ var nextActivities = [
     new NextActivity({
         thisActivityId:  6400,
         nextActivityId: 65,
+        condition: true
+    }),
+
+    new NextActivity({
+        thisActivityId: 6500,
+        nextActivityId: 6,
         condition: true
     }),
 
@@ -599,6 +685,11 @@ var nextActivities = [
         condition: "input=='I do not know'"
     }),
 
+    new NextActivity({
+        thisActivityId:  7,
+        nextActivityId: 7500,
+        condition: "input !=='Devil Wears Prada' && input !=='Wolf of Wall Street' && input !=='Depicable Me' && input !=='I do not know'"
+    }),
 
     new NextActivity({
         thisActivityId:  7100,
@@ -622,6 +713,12 @@ var nextActivities = [
     new NextActivity({
         thisActivityId:  7400,
         nextActivityId: 72,
+        condition: true
+    }),
+
+    new NextActivity({
+        thisActivityId: 7500,
+        nextActivityId: 7,
         condition: true
     }),
 
@@ -664,6 +761,11 @@ var nextActivities = [
         condition: "input=='Food Court'"
     }),
 
+    new NextActivity({
+        thisActivityId:  8,
+        nextActivityId: 8500,
+        condition: "input !=='Shopping' && input !=='Chipotle' && input !=='Disneyland' && input !=='Food Court'"
+    }),
 
     new NextActivity({
         thisActivityId:  8100,
@@ -690,6 +792,11 @@ var nextActivities = [
         condition: true
     }),
 
+    new NextActivity({
+        thisActivityId: 8500,
+        nextActivityId: 8,
+        condition: true
+    }),
 
     //Q9 abcd
     new NextActivity({
@@ -717,6 +824,11 @@ var nextActivities = [
         condition: "input=='Hashtags'"
     }),
 
+    new NextActivity({
+        thisActivityId:  9,
+        nextActivityId: 9500,
+        condition: "input !=='Bills' && input !=='Slow service' && input !=='Waiting' && input !=='Hashtags'"
+    }),
 
     new NextActivity({
         thisActivityId:  9100,
@@ -741,6 +853,12 @@ var nextActivities = [
         thisActivityId:  9400,
         nextActivityId: 10,
         condition: true
+    }),
+
+    new NextActivity({
+        thisActivityId: 9500,
+        nextActivityId: 9,
+        condition: true
     })
 ];
 
@@ -748,7 +866,7 @@ nextActivities.forEach(function(nextActivity) {
     nextActivity.save();
 });
 
-//mongoose.disconnect();
+mongoose.disconnect();
 
 /**
  * workflow

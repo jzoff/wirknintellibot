@@ -11,7 +11,7 @@ module.exports = {
 
             //var choices = ['a', 'b', 'c', 'd'];
             var choices = [];
-            for (var i = 0; i < activities.nextActivities.length; i++) {
+            for (var i = 0; i < activities.nextActivities.length-1; i++) {
                 //condition is "input=='Adventurous'"
                 //grab Adventurous for response
                 var t = activities.nextActivities[i].condition.substr(7);//'Adventurous'
@@ -19,29 +19,7 @@ module.exports = {
                 choices.push(s);
             }
 
-            console.log(activities.currentActivity.data);
-
-            responses = toMessageArray(username, activities.currentActivity.data.desc);
-            var picLink = 'https://wirknintellibot.herokuapp.com/images/q1.png';
-            if (activities.currentActivity.id === 4) {
-                picLink = 'https://wirknintellibot.herokuapp.com/images/q1.png';
-            } else if (activities.currentActivity.id === 5){
-                picLink = 'https://wirknintellibot.herokuapp.com/images/q2.png';
-            } else if (activities.currentActivity.id === 6){
-                picLink = 'https://wirknintellibot.herokuapp.com/images/q3.png';
-            } else if (activities.currentActivity.id === 7) {
-                picLink = 'https://wirknintellibot.herokuapp.com/images/q4.png';
-            } else if (activities.currentActivity.id === 8){
-                picLink = 'https://wirknintellibot.herokuapp.com/images/q5.png';
-            } else {
-                picLink = 'https://wirknintellibot.herokuapp.com/images/q6.png';
-            }
-            var picMsg = {
-                type:   'picture',
-                to:     username,
-                picUrl: picLink //activities.currentActivity.data.picUrl
-            };
-            responses.push(picMsg);
+            responses = toMessageArray(username, desc);
             if(choices){
                 // Adding suggested responses
                 responses[responses.length - 1].suggestedResponses = [];
@@ -66,32 +44,7 @@ module.exports = {
             });
             console.log('kikask :' + responses[0].body);
             logService.createLog(responses[0]);
-        } else {
-            console.log('Pick from the options I gave you');
-            responses.push(
-                {
-                    type: 'text',
-                    to: username,
-                    body: 'Please enter one of the provided answers'
-                }
-            );
-            request.post({
-                url: 'https://engine.apikik.com/api/v1/message',
-                json: {
-                    messages: responses
-                },
-                auth: {
-                    username: 'wirkn',//BOT_USERNAME,
-                    password: '80ed2950-8a5f-4643-bbac-b5fc63b90e4a'//API_KEY
-                }
-            }, function (err, resp, body) {
-                if (resp.statusCode !== 200) {
-                    console.log('API Error ' + resp.statusCode + ': ' + err);
-                }
-            });
-            logService.createLog(responses[0]);
         }
-
         userService.updateSessionIsActive(userSession, !userSession.isActive, function (err, sess) {
             console.log('current session: ' + sess);
 
